@@ -1,13 +1,12 @@
 import express from 'express'
-import * as path from 'path'
 import UserController from '../controller/user-controller.js'
 import DestinationController from '../controller/destination-controller.js'
 import CultureController from '../controller/culture-controller.js'
 
 const publicRoute = express.Router()
 
-publicRoute.get('/', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '/src/view/index.html'))
+publicRoute.get('/api', (req, res) => {
+  res.status(200).sendFile(import.meta.dirname + '/view/index.html')
 })
 
 // TODO: user
