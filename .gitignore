@@ -1,0 +1,8 @@
+/backend/node_modules
+/frontend/node_modules
+
+/backend/.idea
+/frontend/.idea
+
+/backend/.env
+/frontend/.env
