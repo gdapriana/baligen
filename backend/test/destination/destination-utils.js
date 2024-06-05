@@ -53,7 +53,7 @@ class DestinationUtils {
   }
   static async createCommentDestination(token, user, destination, parentId) {
     const response = await supertest(app)
-      .post(`/api/destinations/${destination.slug}/comment`)
+      .post(`/destinations/${destination.slug}/comment`)
       .send({ body: this.commentBody, parentId })
       .auth(token, { type: 'bearer' })
 

@@ -27,7 +27,7 @@ class UserUtils {
   }
   static async loginUser(data) {
     const response = await supertest(app)
-      .post('/api/users/login')
+      .post('/users/login')
       .send(data)
     return response.body
   }

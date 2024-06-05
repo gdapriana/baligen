@@ -8,20 +8,20 @@ const authRoute = express.Router()
 authRoute.use(authMiddleware)
 
 // TODO: user
-authRoute.get('/api/users/current', UserController.get)
-authRoute.patch('/api/users/current', UserController.update)
-authRoute.delete('/api/users/current', UserController.logout)
+authRoute.get('/users/current', UserController.get)
+authRoute.patch('/users/current', UserController.update)
+authRoute.delete('/users/current', UserController.logout)
 
 // TODO: destination
-authRoute.post('/api/destinations/:slug/favorite', DestinationController.favorite)
-authRoute.delete('/api/destinations/:slug/unfavorite', DestinationController.unfavorite)
-authRoute.post('/api/destinations/:slug/comment', DestinationController.comment)
-authRoute.delete('/api/destinations/:slug/uncomment', DestinationController.uncomment)
+authRoute.post('/destinations/:slug/favorite', DestinationController.favorite)
+authRoute.delete('/destinations/:slug/unfavorite', DestinationController.unfavorite)
+authRoute.post('/destinations/:slug/comment', DestinationController.comment)
+authRoute.delete('/destinations/:slug/uncomment', DestinationController.uncomment)
 
 // TODO: culture
-authRoute.post('/api/cultures/:slug/favorite', CultureController.favorite)
-authRoute.delete('/api/cultures/:slug/unfavorite', CultureController.unfavorite)
-authRoute.post('/api/cultures/:slug/comment', CultureController.comment)
-authRoute.delete('/api/cultures/:slug/uncomment', CultureController.uncomment)
+authRoute.post('/cultures/:slug/favorite', CultureController.favorite)
+authRoute.delete('/cultures/:slug/unfavorite', CultureController.unfavorite)
+authRoute.post('/cultures/:slug/comment', CultureController.comment)
+authRoute.delete('/cultures/:slug/uncomment', CultureController.uncomment)
 
 export default authRoute

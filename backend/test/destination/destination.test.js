@@ -4,7 +4,7 @@ import DestinationUtils from './destination-utils.js';
 import UserUtils from '../user/user-utils.js';
 import destinationUtils from './destination-utils.js';
 
-describe('GET /api/destinations/:slug [GET A DESTINATION]', () => {
+describe('GET /destinations/:slug [GET A DESTINATION]', () => {
   beforeEach(async () => {
     await DestinationUtils.createCategory()
     await DestinationUtils.createDistrict()
@@ -17,19 +17,19 @@ describe('GET /api/destinations/:slug [GET A DESTINATION]', () => {
   })
 
   it('should cannot get: invalid slug', async () => {
-    const response = await supertest(app).get('/api/destinations/invalid')
+    const response = await supertest(app).get('/destinations/invalid')
     expect(response.statusCode).toBe(404)
     expect(response.body.errors).toBeDefined()
   })
 
   it('should can get', async () => {
-    const response = await supertest(app).get(`/api/destinations/${DestinationUtils.destination_a.slug}`)
+    const response = await supertest(app).get(`/destinations/${DestinationUtils.destination_a.slug}`)
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
     expect(response.body.data.name).toBe(DestinationUtils.destination_a.name)
   })
 })
-describe('GET /api/destinations [GET ALL DESTINATION]', () => {
+describe('GET /destinations [GET ALL DESTINATION]', () => {
   beforeEach(async () => {
     await DestinationUtils.createCategory()
     await DestinationUtils.createDistrict()
@@ -43,22 +43,22 @@ describe('GET /api/destinations [GET ALL DESTINATION]', () => {
     await DestinationUtils.deleteDistrict()
   })
   it('should can get all destinations', async () => {
-    const response = await supertest(app).get('/api/destinations')
+    const response = await supertest(app).get('/destinations')
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
   })
   it('should can get all destinations with query: name', async () => {
-    const response = await supertest(app).get(`/api/destinations?name=${DestinationUtils.destination_a.name}`)
+    const response = await supertest(app).get(`/destinations?name=${DestinationUtils.destination_a.name}`)
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
   })
   it('should can get all destinations with query: district', async () => {
-    const response = await supertest(app).get(`/api/destinations?district=${DestinationUtils.district.slug}`)
+    const response = await supertest(app).get(`/destinations?district=${DestinationUtils.district.slug}`)
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
   })
 })
-describe('POST /api/destinations/:slug/favorite [FAVORITE DESTINATION]', () => {
+describe('POST /destinations/:slug/favorite [FAVORITE DESTINATION]', () => {
   beforeEach(async () => {
     await DestinationUtils.createCategory()
     await DestinationUtils.createDistrict()
@@ -75,14 +75,14 @@ describe('POST /api/destinations/:slug/favorite [FAVORITE DESTINATION]', () => {
 
   it('should cannot favorited: no token', async () => {
     const response = await supertest(app)
-      .post(`/api/destinations/${DestinationUtils.destination_a.slug}/favorite`)
+      .post(`/destinations/${DestinationUtils.destination_a.slug}/favorite`)
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
   })
 
   it('should cannot favorited: invalid token', async () => {
     const response = await supertest(app)
-      .post(`/api/destinations/${DestinationUtils.destination_a.slug}/favorite`)
+      .post(`/destinations/${DestinationUtils.destination_a.slug}/favorite`)
       .auth('invalidToken', { type: 'bearer' })
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
@@ -92,7 +92,7 @@ describe('POST /api/destinations/:slug/favorite [FAVORITE DESTINATION]', () => {
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .post(`/api/destinations/invalidSlug/favorite`)
+      .post(`/destinations/invalidSlug/favorite`)
       .auth(userLogin.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(404)
     expect(response.body.errors).toBeDefined()
@@ -102,14 +102,14 @@ describe('POST /api/destinations/:slug/favorite [FAVORITE DESTINATION]', () => {
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .post(`/api/destinations/${DestinationUtils.destination_a.slug}/favorite`)
+      .post(`/destinations/${DestinationUtils.destination_a.slug}/favorite`)
       .auth(userLogin.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
     await DestinationUtils.deleteFavoriteDestination(destinationUtils.destination_a, UserUtils.user_a)
   })
 })
-describe('DELETE /api/destinations/:slug/unfavorite [UNFAVORITE DESTINATION]', () => {
+describe('DELETE /destinations/:slug/unfavorite [UNFAVORITE DESTINATION]', () => {
   beforeEach(async () => {
     await DestinationUtils.createCategory()
     await DestinationUtils.createDistrict()
@@ -126,14 +126,14 @@ describe('DELETE /api/destinations/:slug/unfavorite [UNFAVORITE DESTINATION]', (
 
   it('should cannot unfavorite: no token', async () => {
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/unfavorite`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/unfavorite`)
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
   })
 
   it('should cannot unfavorite: invalid token', async () => {
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/unfavorite`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/unfavorite`)
       .auth('invalidToken', { type: 'bearer' })
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
@@ -143,7 +143,7 @@ describe('DELETE /api/destinations/:slug/unfavorite [UNFAVORITE DESTINATION]', (
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/unfavorite`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/unfavorite`)
       .auth(userLogin.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(404)
     expect(response.body.errors).toBeDefined()
@@ -154,13 +154,13 @@ describe('DELETE /api/destinations/:slug/unfavorite [UNFAVORITE DESTINATION]', (
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/unfavorite`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/unfavorite`)
       .auth(userLogin.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
   })
 })
-describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
+describe('POST /destinations/:slug/comment [COMMENT DESTINATION]', () => {
   beforeEach(async () => {
     await DestinationUtils.createCategory()
     await DestinationUtils.createDistrict()
@@ -176,7 +176,7 @@ describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
   })
   it('should cannot comment: no token', async () => {
     const response = await supertest(app)
-      .post(`/api/destinations/${DestinationUtils.destination_a.slug}/comment`)
+      .post(`/destinations/${DestinationUtils.destination_a.slug}/comment`)
       .send({ body: '' })
 
     expect(response.statusCode).toBe(403)
@@ -184,7 +184,7 @@ describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
   })
   it('should cannot comment: invalid token', async () => {
     const response = await supertest(app)
-      .post(`/api/destinations/${DestinationUtils.destination_a.slug}/comment`)
+      .post(`/destinations/${DestinationUtils.destination_a.slug}/comment`)
       .send({ body: '' })
       .auth('invalidToken', { type: 'bearer' })
 
@@ -196,7 +196,7 @@ describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
     const loginUser = await UserUtils.loginUser({ username, password })
 
     const response = await supertest(app)
-      .post(`/api/destinations/${DestinationUtils.destination_a.slug}/comment`)
+      .post(`/destinations/${DestinationUtils.destination_a.slug}/comment`)
       .send({ body: DestinationUtils.commentBody, parentId: 'invalidParentId' })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
 
@@ -208,7 +208,7 @@ describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
     const loginUser = await UserUtils.loginUser({ username, password })
 
     const response = await supertest(app)
-      .post(`/api/destinations/${DestinationUtils.destination_a.slug}/comment`)
+      .post(`/destinations/${DestinationUtils.destination_a.slug}/comment`)
       .send({  })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
 
@@ -220,7 +220,7 @@ describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
     const loginUser = await UserUtils.loginUser({ username, password })
 
     const response = await supertest(app)
-      .post(`/api/destinations/invalidSlig/comment`)
+      .post(`/destinations/invalidSlig/comment`)
       .send({ body: DestinationUtils.commentBody })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
 
@@ -232,7 +232,7 @@ describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
     const loginUser = await UserUtils.loginUser({ username, password })
 
     const response = await supertest(app)
-      .post(`/api/destinations/${destinationUtils.destination_a.slug}/comment`)
+      .post(`/destinations/${destinationUtils.destination_a.slug}/comment`)
       .send({ body: DestinationUtils.commentBody })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
 
@@ -244,7 +244,7 @@ describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
     const loginUser = await UserUtils.loginUser({ username, password })
     const comment = await DestinationUtils.createCommentDestination(loginUser.data.accessToken, UserUtils.user_a, DestinationUtils.destination_a)
     const response = await supertest(app)
-      .post(`/api/destinations/${destinationUtils.destination_a.slug}/comment`)
+      .post(`/destinations/${destinationUtils.destination_a.slug}/comment`)
       .send({ body: DestinationUtils.commentBody, parentId: comment.data.id })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
 
@@ -252,7 +252,7 @@ describe('POST /api/destinations/:slug/comment [COMMENT DESTINATION]', () => {
     expect(response.body.data).toBeDefined()
   })
 })
-describe('DELETE /api/destinations/:slug/uncomment [UNCOMMENT DESTINATION]', () => {
+describe('DELETE /destinations/:slug/uncomment [UNCOMMENT DESTINATION]', () => {
   beforeEach(async () => {
     await DestinationUtils.createCategory()
     await DestinationUtils.createDistrict()
@@ -270,7 +270,7 @@ describe('DELETE /api/destinations/:slug/uncomment [UNCOMMENT DESTINATION]', () 
   })
   it('should cannot uncomment: no token', async () => {
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
       .send({ body: '' })
 
     expect(response.statusCode).toBe(403)
@@ -281,7 +281,7 @@ describe('DELETE /api/destinations/:slug/uncomment [UNCOMMENT DESTINATION]', () 
     const userLogin = await UserUtils.loginUser({ username, password })
     const comment = await DestinationUtils.createCommentDestination(userLogin.data.accessToken, UserUtils.user_a, DestinationUtils.destination_a)
     const response = await supertest(app)
-      .delete('/api/destinations/invalidSlug/uncomment')
+      .delete('/destinations/invalidSlug/uncomment')
       .send({ id: comment.data.id })
       .auth(userLogin.data.accessToken, { type: 'bearer' })
 
@@ -292,7 +292,7 @@ describe('DELETE /api/destinations/:slug/uncomment [UNCOMMENT DESTINATION]', () 
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
       .send({ id: 'invalidId' })
       .auth(userLogin.data.accessToken, { type: 'bearer' })
 
@@ -305,7 +305,7 @@ describe('DELETE /api/destinations/:slug/uncomment [UNCOMMENT DESTINATION]', () 
     const comment = await DestinationUtils.createCommentDestination(user_1.data.accessToken, UserUtils.user_a, DestinationUtils.destination_a)
 
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
       .send({ id: comment.data.id })
       .auth(user_2.data.accessToken, { type: 'bearer' })
 
@@ -318,7 +318,7 @@ describe('DELETE /api/destinations/:slug/uncomment [UNCOMMENT DESTINATION]', () 
     const comment = await DestinationUtils.createCommentDestination(userLogin.data.accessToken, UserUtils.user_a, DestinationUtils.destination_a)
 
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
       .send({ id: comment.data.id })
       .auth(userLogin.data.accessToken, { type: 'bearer' })
 
@@ -332,7 +332,7 @@ describe('DELETE /api/destinations/:slug/uncomment [UNCOMMENT DESTINATION]', () 
     await DestinationUtils.createCommentDestination(userLogin.data.accessToken, UserUtils.user_a, DestinationUtils.destination_a, comment.data.id)
 
     const response = await supertest(app)
-      .delete(`/api/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
+      .delete(`/destinations/${DestinationUtils.destination_a.slug}/uncomment`)
       .send({ id: comment.data.id })
       .auth(userLogin.data.accessToken, { type: 'bearer' })
 

@@ -28,7 +28,7 @@ class CultureUtils {
   }
   static async createComment(token, user, culture, parentId) {
     const response = await supertest(app)
-      .post(`/api/cultures/${culture.slug}/comment`)
+      .post(`/cultures/${culture.slug}/comment`)
       .send({ body: this.commentBody, parentId })
       .auth(token, { type: 'bearer' })
     return response.body

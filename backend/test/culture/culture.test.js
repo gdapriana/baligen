@@ -3,9 +3,8 @@ import app from '../../src/application/app.js';
 import CultureUtils from './culture-utils.js';
 import UserUtils from '../user/user-utils.js';
 import cultureUtils from './culture-utils.js';
-import DestinationUtils from '../destination/destination-utils.js';
 
-describe('GET /api/cultures/:slug [GET CULTURE]', () => {
+describe('GET  /cultures/:slug [GET CULTURE]', () => {
   beforeEach(async () => {
     await CultureUtils.createCulture(CultureUtils.culture)
   })
@@ -14,18 +13,18 @@ describe('GET /api/cultures/:slug [GET CULTURE]', () => {
   })
   it('should cannot get: no culture found', async () => {
     const response = await supertest(app)
-      .get('/api/cultures/invalidSlug')
+      .get('/cultures/invalidSlug')
     expect(response.statusCode).toBe(404)
     expect(response.body.errors).toBeDefined()
   })
   it('should can get', async () => {
     const response = await supertest(app)
-      .get(`/api/cultures/${CultureUtils.culture.slug}`)
+      .get(`/cultures/${CultureUtils.culture.slug}`)
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
   });
 })
-describe('GET /api/cultures [GET ALL CULTURES]', () => {
+describe('GET /cultures [GET ALL CULTURES]', () => {
   beforeEach(async () => {
     await CultureUtils.createCulture(CultureUtils.culture)
   })
@@ -33,12 +32,12 @@ describe('GET /api/cultures [GET ALL CULTURES]', () => {
     await CultureUtils.deleteCulture(CultureUtils.culture.slug)
   })
   it('should can get all cultures', async () => {
-    const response = await supertest(app).get('/api/cultures')
+    const response = await supertest(app).get('/cultures')
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
   });
 })
-describe('POST /api/cultures/:slug/favorite', () => {
+describe('POST /cultures/:slug/favorite', () => {
   beforeEach(async () => {
     await UserUtils.createUser(UserUtils.user_a)
     await CultureUtils.createCulture(CultureUtils.culture)
@@ -49,13 +48,13 @@ describe('POST /api/cultures/:slug/favorite', () => {
   })
   it('should cannot favorite: no token', async () => {
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/favorite`)
+      .post(`/cultures/${CultureUtils.culture.slug}/favorite`)
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
   })
   it('should cannot favorite: invalid token', async () => {
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/favorite`)
+      .post(`/cultures/${CultureUtils.culture.slug}/favorite`)
       .auth('invalidToken', { type: 'bearer' })
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
@@ -64,7 +63,7 @@ describe('POST /api/cultures/:slug/favorite', () => {
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .post(`/api/cultures/invalidSlug/favorite`)
+      .post(`/cultures/invalidSlug/favorite`)
       .auth(userLogin.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(404)
     expect(response.body.errors).toBeDefined()
@@ -73,14 +72,14 @@ describe('POST /api/cultures/:slug/favorite', () => {
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/favorite`)
+      .post(`/cultures/${CultureUtils.culture.slug}/favorite`)
       .auth(userLogin.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
     await CultureUtils.deleteFavorited( UserUtils.user_a.username, CultureUtils.culture.slug)
   })
 })
-describe('DELETE /api/cultures/:slug/unfavorite', () => {
+describe('DELETE /cultures/:slug/unfavorite', () => {
   beforeEach(async () => {
     await UserUtils.createUser(UserUtils.user_a)
     await CultureUtils.createCulture(CultureUtils.culture)
@@ -91,13 +90,13 @@ describe('DELETE /api/cultures/:slug/unfavorite', () => {
   })
   it('should cannot unfavorite: no token', async () => {
     const response = await supertest(app)
-      .delete(`/api/cultures/${CultureUtils.culture.slug}/unfavorite`)
+      .delete(`/cultures/${CultureUtils.culture.slug}/unfavorite`)
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
   })
   it('should cannot unfavorite: invalid token', async () => {
     const response = await supertest(app)
-      .delete(`/api/cultures/${CultureUtils.culture.slug}/unfavorite`)
+      .delete(`/cultures/${CultureUtils.culture.slug}/unfavorite`)
       .auth('invalidToken', { type: 'bearer' })
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
@@ -105,7 +104,7 @@ describe('DELETE /api/cultures/:slug/unfavorite', () => {
   it('should cannot unfavorite: no favorited before', async () => {
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
-    const response = await supertest(app).delete(`/api/cultures/${CultureUtils.culture.slug}/unfavorite`)
+    const response = await supertest(app).delete(`/cultures/${CultureUtils.culture.slug}/unfavorite`)
       .auth(userLogin.data.accessToken, { type: 'bearer'})
     expect(response.statusCode).toBe(404)
     expect(response.body.errors).toBeDefined()
@@ -116,14 +115,14 @@ describe('DELETE /api/cultures/:slug/unfavorite', () => {
     const userLogin = await UserUtils.loginUser({ username, password })
 
     const response = await supertest(app)
-      .delete(`/api/cultures/${cultureUtils.culture.slug}/unfavorite`)
+      .delete(`/cultures/${cultureUtils.culture.slug}/unfavorite`)
       .auth(userLogin.data.accessToken, { type: 'bearer' })
 
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
   })
 })
-describe('POST /api/cultures/:slug/comment', () => {
+describe('POST /cultures/:slug/comment', () => {
   beforeEach(async () => {
     await UserUtils.createUser(UserUtils.user_a)
     await CultureUtils.createCulture(CultureUtils.culture)
@@ -134,14 +133,14 @@ describe('POST /api/cultures/:slug/comment', () => {
   })
   it('should cannot comment: no token', async () => {
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/favorite`)
+      .post(`/cultures/${CultureUtils.culture.slug}/favorite`)
       .send({ body: '' })
     expect(response.statusCode).toBe(403)
     expect(response.body.errors).toBeDefined()
   })
   it('should cannot comment: invalid token', async () => {
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/favorite`)
+      .post(`/cultures/${CultureUtils.culture.slug}/favorite`)
       .send({ body: '' })
       .auth('invalidToken', { type: 'bearer' })
     expect(response.statusCode).toBe(403)
@@ -151,7 +150,7 @@ describe('POST /api/cultures/:slug/comment', () => {
     const { username, password } = UserUtils.user_a
     const loginUser = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/comment`)
+      .post(`/cultures/${CultureUtils.culture.slug}/comment`)
       .send({ body: CultureUtils.commentBody, parentId: 'invalidParentId' })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(404)
@@ -161,7 +160,7 @@ describe('POST /api/cultures/:slug/comment', () => {
     const { username, password } = UserUtils.user_a
     const loginUser = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/comment`)
+      .post(`/cultures/${CultureUtils.culture.slug}/comment`)
       .send({ })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(400)
@@ -171,7 +170,7 @@ describe('POST /api/cultures/:slug/comment', () => {
     const { username, password } = UserUtils.user_a
     const loginUser = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .post(`/api/cultures/invalidSlug/comment`)
+      .post(`/cultures/invalidSlug/comment`)
       .send({ body: CultureUtils.commentBody, parentId: 'invalidParentId' })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(404)
@@ -181,7 +180,7 @@ describe('POST /api/cultures/:slug/comment', () => {
     const { username, password } = UserUtils.user_a
     const loginUser = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/comment`)
+      .post(`/cultures/${CultureUtils.culture.slug}/comment`)
       .send({ body: CultureUtils.commentBody })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(200)
@@ -192,14 +191,14 @@ describe('POST /api/cultures/:slug/comment', () => {
     const loginUser = await UserUtils.loginUser({ username, password })
     const comment = await CultureUtils.createComment(loginUser.data.accessToken, UserUtils.user_a, CultureUtils.culture)
     const response = await supertest(app)
-      .post(`/api/cultures/${CultureUtils.culture.slug}/comment`)
+      .post(`/cultures/${CultureUtils.culture.slug}/comment`)
       .send({ body: CultureUtils.commentBody, parentId: comment.data.id })
       .auth(loginUser.data.accessToken, { type: 'bearer' })
     expect(response.statusCode).toBe(200)
     expect(response.body.data).toBeDefined()
   })
 })
-describe('DELETE /api/cultures/:slug/uncomment', () => {
+describe('DELETE /cultures/:slug/uncomment', () => {
   beforeEach(async () => {
     await UserUtils.createUser(UserUtils.user_a)
     await UserUtils.createUser(UserUtils.user_b)
@@ -212,7 +211,7 @@ describe('DELETE /api/cultures/:slug/uncomment', () => {
   })
   it('should cannot uncomment: no token', async () => {
     const response = await supertest(app)
-      .delete(`/api/cultures/${CultureUtils.culture.slug}/uncomment`)
+      .delete(`/cultures/${CultureUtils.culture.slug}/uncomment`)
       .send({ body: '' })
 
     expect(response.statusCode).toBe(403)
@@ -220,7 +219,7 @@ describe('DELETE /api/cultures/:slug/uncomment', () => {
   })
   it('should cannot uncomment: invalid token', async () => {
     const response = await supertest(app)
-      .delete('/api/cultures/invalidSlug/uncomment')
+      .delete('/cultures/invalidSlug/uncomment')
       .send({ body: '' })
       .auth('invalidToken', { type: 'bearer' })
 
@@ -231,7 +230,7 @@ describe('DELETE /api/cultures/:slug/uncomment', () => {
     const { username, password } = UserUtils.user_a
     const userLogin = await UserUtils.loginUser({ username, password })
     const response = await supertest(app)
-      .delete(`/api/cultures/${CultureUtils.culture.slug}/uncomment`)
+      .delete(`/cultures/${CultureUtils.culture.slug}/uncomment`)
       .send({ id: 'invalidId' })
       .auth(userLogin.data.accessToken, { type: 'bearer' })
 
@@ -243,7 +242,7 @@ describe('DELETE /api/cultures/:slug/uncomment', () => {
     const user_2 = await UserUtils.loginUser({ username: UserUtils.user_b.username, password: UserUtils.user_b.password})
     const comment = await cultureUtils.createComment(user_1.data.accessToken, UserUtils.user_a, CultureUtils.culture)
     const response = await supertest(app)
-      .delete(`/api/cultures/${CultureUtils.culture.slug}/uncomment`)
+      .delete(`/cultures/${CultureUtils.culture.slug}/uncomment`)
       .send({ id: comment.data.id })
       .auth(user_2.data.accessToken, { type: 'bearer' })
 
@@ -256,7 +255,7 @@ describe('DELETE /api/cultures/:slug/uncomment', () => {
     const comment = await CultureUtils.createComment(userLogin.data.accessToken, UserUtils.user_a, CultureUtils.culture)
 
     const response = await supertest(app)
-      .delete(`/api/cultures/${CultureUtils.culture.slug}/uncomment`)
+      .delete(`/cultures/${CultureUtils.culture.slug}/uncomment`)
       .send({ id: comment.data.id })
       .auth(userLogin.data.accessToken, { type: 'bearer' })
 
@@ -270,7 +269,7 @@ describe('DELETE /api/cultures/:slug/uncomment', () => {
     await cultureUtils.createComment(userLogin.data.accessToken, UserUtils.user_a, CultureUtils.culture, comment.data.id)
 
     const response = await supertest(app)
-      .delete(`/api/cultures/${CultureUtils.culture.slug}/uncomment`)
+      .delete(`/cultures/${CultureUtils.culture.slug}/uncomment`)
       .send({ id: comment.data.id })
       .auth(userLogin.data.accessToken, { type: 'bearer' })
 
