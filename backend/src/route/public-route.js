@@ -5,6 +5,10 @@ import CultureController from '../controller/culture-controller.js'
 
 const publicRoute = express.Router()
 
+publicRoute.get('/', (req, res) => {
+  res.status(200).end('<p>Hello World</p>')
+})
+
 // TODO: user
 publicRoute.post('/api/users/register', UserController.register)
 publicRoute.post('/api/users/login', UserController.login)
