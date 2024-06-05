@@ -111,7 +111,7 @@ model District {
   destinations Destination[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  Culture      Culture[]
+  cultures     Culture[]
 
   @@map("districts")
 }
@@ -126,7 +126,7 @@ model Category {
 
   updatedAt DateTime  @updatedAt
   createdAt DateTime  @default(now())
-  Culture   Culture[]
+  cultures  Culture[]
 
   @@map("categories")
 }
