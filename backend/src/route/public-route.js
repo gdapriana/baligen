@@ -3,6 +3,7 @@ import UserController from '../controller/user-controller.js'
 import DestinationController from '../controller/destination-controller.js'
 import CultureController from '../controller/culture-controller.js'
 import CategoryController from '../controller/category-controller.js';
+import DistrictController from '../controller/district-controller.js';
 
 const publicRoute = express.Router()
 
@@ -21,5 +22,8 @@ publicRoute.get('/cultures', CultureController.gets)
 
 publicRoute.get('/categories/:slug', CategoryController.get)
 publicRoute.get('/categories', CategoryController.gets)
+
+publicRoute.get('/districts/:slug', DistrictController.get)
+publicRoute.get('/districts', DistrictController.gets)
 
 export default publicRoute
