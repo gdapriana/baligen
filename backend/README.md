@@ -115,30 +115,302 @@ auth `bearer token`
 ```
 
 
-## Api Specificatuib [DESTINATION]
-> get `GET /api/destinations/:id`
+## Api Specification [DESTINATION]
+> get `GET /api/destinations/:slug`
+
+**success response (200)**
+
+```json
+{
+  "data": {
+    "name": "..."
+  }
+}
+```
 
 > get all `GET /api/destinations`
 
-> favorite `POST /api/destinations/:id/favorite`
+**success response (200)**
 
-> unfavorite `DELETE /api/destinations/:id/unfavorite`
+```json
+{
+  "data": [
+    {
+      "name": "..."
+    },
+    {
+      "name": "..."
+    }
+  ]
+}
+```
 
-> comment `POST /api/destinations/:id/comment`
+> favorite `POST /api/destinations/:slug/favorite` auth `bearer token`
 
-> uncomment `DELETE /api/destinations/:id/uncomment`
+**req body**
+
+```json
+{
+  "username": "...",
+  "destinationSlug": "..."
+}
+```
+
+**res success (200)**
+
+```json
+{
+  "data": {
+    "destination": true
+  }
+}
+```
+
+**res success (403)**
+
+```json
+{
+  "errors": "..."
+}
+```
+
+> unfavorite `DELETE /api/destinations/:slug/unfavorite`
+
+**req body**
+
+```json
+{
+  "username": "...",
+  "destinationSlug": "..."
+}
+```
+
+**res success (200)**
+
+```json
+{
+  "data": {
+    "destination": true
+  }
+}
+```
+
+**res error (403)**
+
+```json
+{
+  "errors": "..."
+}
+```
+
+> comment `POST /api/destinations/:slug/comment`
+
+**req body**
+
+```json
+{
+  "parentId": "...",
+  "username": "...",
+  "destinationSlug": "...",
+  "body": "..."
+}
+```
+
+**res success (200)**
+
+```json
+{
+  "data": {
+    "id": "..."
+  }
+}
+```
+
+**res error (403)**
+
+```json
+{
+  "errors": "..."
+}
+```
+
+> uncomment `DELETE /api/destinations/:slug/uncomment`
+
+**req body**
+
+```json
+{
+  "id": "...",
+  "username": "...",
+  "destinationSlug": "..."
+}
+```
+
+**res success (200)**
+
+```json
+{
+  "data": {
+    "id": "..."
+  }
+}
+```
+
+**res error (403)**
+
+```json
+{
+  "errors": "..."
+}
+```
 
 
 
-## Api Specificatuib [CULTURE]
+
+## Api Specification [CULTURE]
 > get `GET /api/cultures/:id`
 
+**success response (200)**
+
+```json
+{
+  "data": {
+    "name": "..."
+  }
+}
+```
 > get all `GET /api/cultures`
 
-> favorite `POST /api/cultures/:id/favorite`
+**success response (200)**
 
-> unfavorite `DELETE /api/cultures/:id/unfavorite`
+```json
+{
+  "data": [
+    {
+      "name": "..."
+    },
+    {
+      "name": "..."
+    }
+  ]
+}
+```
 
-> comment `POST /api/cultures/:id/comment`
+> favorite `POST /api/cultures/:slug/favorite` auth `bearer token`
 
-> uncomment `DELETE /api/cultures/:id/uncomment` 
+**req body**
+
+```json
+{
+  "username": "...",
+  "cultureSlug": "..."
+}
+```
+
+**res success (200)**
+
+```json
+{
+  "data": {
+    "culture": true
+  }
+}
+```
+
+**res success (403)**
+
+```json
+{
+  "errors": "..."
+}
+```
+
+> unfavorite `DELETE /api/cultures/:slug/unfavorite`
+
+**req body**
+
+```json
+{
+  "username": "...",
+  "cultureSlug": "..."
+}
+```
+
+**res success (200)**
+
+```json
+{
+  "data": {
+    "culture": true
+  }
+}
+```
+
+**res error (403)**
+
+```json
+{
+  "errors": "..."
+}
+```
+
+> comment `POST /api/cultures/:slug/comment`
+
+**req body**
+
+```json
+{
+  "parentId": "...",
+  "username": "...",
+  "cultureSlug": "...",
+  "body": "..."
+}
+```
+
+**res success (200)**
+
+```json
+{
+  "data": {
+    "id": "..."
+  }
+}
+```
+
+**res error (403)**
+
+```json
+{
+  "errors": "..."
+}
+```
+
+> uncomment `DELETE /api/cultures/:slug/uncomment`
+
+**req body**
+
+```json
+{
+  "id": "...",
+  "username": "...",
+  "cultureSlug": "..."
+}
+```
+
+**res success (200)**
+
+```json
+{
+  "data": {
+    "id": "..."
+  }
+}
+```
+
+**res error (403)**
+
+```json
+{
+  "errors": "..."
+}
+```
