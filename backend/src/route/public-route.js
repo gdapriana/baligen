@@ -8,7 +8,7 @@ import DistrictController from '../controller/district-controller.js';
 const publicRoute = express.Router()
 
 publicRoute.get('/', (req, res) => {
-  res.status(200).json({ data: 'hello from baligen ' })
+  res.status(200).json({ data: 'hello from baligen server', documentation: 'https://github.com/gdapriana/baligen/blob/main/backend/README.md' })
 })
 
 publicRoute.post('/users/register', UserController.register)
