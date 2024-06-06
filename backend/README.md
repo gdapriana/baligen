@@ -2,121 +2,119 @@
 
 # BALIGEN SERVER
 ## Api Specification [USER]
-> register `POST /api/users/register`
+> register `POST /users/register`
 auth `public`
 
 **request body**
 
-```
+```json
 {
-  username: string,
-  password: string,
-  name: string
+  "username": "...",
+  "password": "...",
+  "name": "..." 
 }
 ```
 **success response (200)**
 
-```
+```json
 {
-  data: {
-    username: string,
-    name: string
+  "data": {
+    "username": "string",
+    "name": "string"
   }
 }
 ```
 **error response (400)**
 
-```
+```json
 {
-  errors: "username min 3 \password min 8 \etc"
+  "errors": "username min 3 password min 8 etc"
 }
 ```
-> login `POST /api/users/login`
+> login `POST /users/login`
 auth `public`
 
 **request body**
 
-```
+```json
 {
-  username: string,
-  password: string
+  "username": "string",
+  "password": "string"
 }
 ```
 **success response (200)**
 
-```
+```json
 {
-  data: {
-    accessToken: string
+  "data": {
+    "accessToken": "string"
   }
 }
 ```
 **error response (400)**
 
-```
+```json
 {
-  errors: "username min 3 \password min 8 \etc"
+  "errors": "username min 3 password min 8 etc"
 }
 ```
-> get `GET /api/users/current`
+> get `GET /users/current`
 auth `bearer token`
 
 **success response (200)**
 
-```
+```json
 {
-  data: {
-    username: string,
-    name: string,
-    address: string,
-    ...
+  "data": {
+    "username": "string",
+    "name": "string",
+    "address": "string"
   }
 }
 ```
-> update `PATCH /api/users/current`
+> update `PATCH /users/current`
 auth `bearer token`
 
 **request body**
 
-```
+```json
 {
-  username: string?,
-  password: string?,
-  ...
+  "username": "string",
+  "password": "string"
 }
 ```
 **success response (200)**
 
-```
+```json
 {
-  data: {
-    username: string
+  "data": {
+    "username": "string"
   }
 }
 ```
 **error response (400)**
 
-```
+```json
 {
-  errors: "name min 3 \address min 8 \etc"
+  "errors": "name min 3 address min 8 etc"
 }
 ```
-> logout `DELETE /api/users/current`
+> logout `DELETE /users/current`
 auth `bearer token`
 
 **success response (200)**
 
-```
+```json
 {
-  data: {
-    username: string
+  "data": {
+    "username": "string"
   }
 }
 ```
 
 
 ## Api Specification [DESTINATION]
-> get `GET /api/destinations/:slug`
+> get `GET /destinations/:slug`
 
 **success response (200)**
 
@@ -128,7 +126,7 @@ auth `bearer token`
 }
 ```
 
-> get all `GET /api/destinations`
+> get all `GET /destinations`
 
 **success response (200)**
 
@@ -145,7 +143,7 @@ auth `bearer token`
 }
 ```
 
-> favorite `POST /api/destinations/:slug/favorite` auth `bearer token`
+> favorite `POST /destinations/:slug/favorite` auth `bearer token`
 
 **req body**
 
@@ -174,7 +172,7 @@ auth `bearer token`
 }
 ```
 
-> unfavorite `DELETE /api/destinations/:slug/unfavorite`
+> unfavorite `DELETE /destinations/:slug/unfavorite`
 
 **req body**
 
@@ -203,7 +201,7 @@ auth `bearer token`
 }
 ```
 
-> comment `POST /api/destinations/:slug/comment`
+> comment `POST /destinations/:slug/comment`
 
 **req body**
 
@@ -234,7 +232,7 @@ auth `bearer token`
 }
 ```
 
-> uncomment `DELETE /api/destinations/:slug/uncomment`
+> uncomment `DELETE /destinations/:slug/uncomment`
 
 **req body**
 
@@ -268,7 +266,7 @@ auth `bearer token`
 
 
 ## Api Specification [CULTURE]
-> get `GET /api/cultures/:id`
+> get `GET /cultures/:id`
 
 **success response (200)**
 
@@ -279,7 +277,7 @@ auth `bearer token`
   }
 }
 ```
-> get all `GET /api/cultures`
+> get all `GET /cultures`
 
 **success response (200)**
 
@@ -296,7 +294,7 @@ auth `bearer token`
 }
 ```
 
-> favorite `POST /api/cultures/:slug/favorite` auth `bearer token`
+> favorite `POST /cultures/:slug/favorite` auth `bearer token`
 
 **req body**
 
@@ -325,7 +323,7 @@ auth `bearer token`
 }
 ```
 
-> unfavorite `DELETE /api/cultures/:slug/unfavorite`
+> unfavorite `DELETE /cultures/:slug/unfavorite`
 
 **req body**
 
@@ -354,7 +352,7 @@ auth `bearer token`
 }
 ```
 
-> comment `POST /api/cultures/:slug/comment`
+> comment `POST /cultures/:slug/comment`
 
 **req body**
 
@@ -385,7 +383,7 @@ auth `bearer token`
 }
 ```
 
-> uncomment `DELETE /api/cultures/:slug/uncomment`
+> uncomment `DELETE /cultures/:slug/uncomment`
 
 **req body**
 
