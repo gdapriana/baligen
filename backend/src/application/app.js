@@ -12,7 +12,7 @@ const corsOptions = {
 
 const app = express()
 app.use(express.json())
-app.use(cors({ credentials: true, corsOptions }))
+app.use(cors(corsOptions))
 app.use(cookieParser())
 app.use(publicRoute)
 app.use(authRoute)
