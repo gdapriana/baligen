@@ -3,7 +3,6 @@
 import axios from 'axios';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
-import {Badge} from '@/components/ui/badge';
 import {toast} from 'sonner';
 import {useRouter} from 'next/navigation';
 import {useState} from 'react';
@@ -32,8 +31,8 @@ export default function RegisterPage () {
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/users/register`, payload)
       setLoading(false)
-      toast.success('Register success, please signin')
-      push('/signin')
+      toast.success('Register success, please login')
+      push('/login')
     } catch (e) {
       toast.error(e.response.data.errors)
       setLoading(false)
@@ -57,10 +56,9 @@ export default function RegisterPage () {
           <h1 className="font-bold text-xl lg:text-3xl">Welcome to <span
             className="inline-block p-4 bg-stone-200 rounded-lg">{process.env.NEXT_PUBLIC_APP}</span></h1>
           <p className="text-muted-foreground">Explore the beauty of Bali!. Fill out form bellow to register</p>
-          <p className="text-muted-foreground">Already have an account? <Button variant="link" size="sm" asChild><Link href="/signin" className="underline">Signin</Link></Button></p>
+          <p className="text-muted-foreground">Already have an account? <Button variant="link" size="sm" asChild><Link href="/login" className="underline">Login</Link></Button></p>
         </div>
-        <form onSubmit={submitHandle}
-              className="lg:w-1/2 w-full lg:max-w-full max-w-lg gap-8 grid grid-cols-1 lg:grid-cols-2">
+        <form onSubmit={submitHandle} className="lg:w-1/2 w-full lg:max-w-full max-w-lg gap-8 grid grid-cols-1 lg:grid-cols-2">
           <label htmlFor="username" className="md:col-span-2 gap-4 flex flex-col justify-start items-stretch">
             <span className="text-muted-foreground">Username</span>
             <Input name="username" id="username" placeholder="username here..." />
@@ -75,7 +73,7 @@ export default function RegisterPage () {
           </label>
           <label htmlFor="confirmPassword" className="col-span-1 gap-4 flex flex-col justify-start items-stretch">
             <span className="text-muted-foreground line-clamp-1">Confirm Password</span>
-            <Input name="confitmPassword" id="confirmPassword" type="password" placeholder="********"/>
+            <Input name="confirmPassword" id="confirmPassword" type="password" placeholder="********"/>
           </label>
           <Button className="gap-1" type="submit">Register <LogIn className={iconClass} /></Button>
         </form>

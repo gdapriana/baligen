@@ -7,8 +7,8 @@ export const SigninBtn = ({ view }) => {
   return (
     <>
       <Button className={cn('gap-2', view === 'mobile' ? 'md:hidden' : 'hidden md:flex')} asChild>
-        <Link href="/signin">
-          <LogIn className={iconClass} /> Sign in
+        <Link href="/login">
+          <LogIn className={iconClass} /> Login
         </Link>
       </Button>
     </>
