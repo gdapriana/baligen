@@ -3,6 +3,7 @@ import authMiddleware from '../middleware/auth-middleware.js'
 import UserController from '../controller/user-controller.js'
 import DestinationController from '../controller/destination-controller.js'
 import CultureController from '../controller/culture-controller.js'
+import refreshToken from '../controller/refresh-token.js';
 
 const authRoute = express.Router()
 authRoute.use(authMiddleware)
@@ -23,5 +24,8 @@ authRoute.post('/cultures/:slug/favorite', CultureController.favorite)
 authRoute.delete('/cultures/:slug/unfavorite', CultureController.unfavorite)
 authRoute.post('/cultures/:slug/comment', CultureController.comment)
 authRoute.delete('/cultures/:slug/uncomment', CultureController.uncomment)
+
+// TODO: refresh token
+authRoute.get('/token', refreshToken)
 
 export default authRoute

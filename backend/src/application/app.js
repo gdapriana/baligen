@@ -5,7 +5,7 @@ import publicRoute from '../route/public-route.js'
 import authRoute from '../route/auth-route.js'
 import errorMiddleware from '../middleware/error-middleware.js'
 
-const whitelist = ['https://baligen.vercel.app', 'http://localhost:3000']
+const whitelist = ['https://baligen.vercel.app', 'https://baligen-server.vercel.app', 'http://localhost:3000']
 const corsOptions = {
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
