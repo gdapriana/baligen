@@ -45,7 +45,11 @@ class DestinationService {
       },
       include: {
         category: true,
-        district: true
+        district: true,
+        _count: true,
+        commentedByUsers: true,
+        favoritedByUsers: true,
+        ratedByUsers: true
       }
     })
   }

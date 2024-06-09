@@ -10,36 +10,9 @@ export const PopularSearch = ({ loading, setLoading, destinations }) => {
         </div>
         <div className="w-full flex justify-center items-center gap-2 overflow-hidden lg:basis-0 lg:grow">
           <InteractiveMarquee>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
-            <Badge>Uluwatu</Badge>
+            <Badge className="mx-1">Apriana</Badge>
+            <Badge className="mx-1">Apriana</Badge>
+            <Badge className="mx-1">Apriana</Badge>
           </InteractiveMarquee>
         </div>
       </div>
