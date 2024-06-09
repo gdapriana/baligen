@@ -27,8 +27,8 @@ export default function LoginPage () {
       toast.success('Login success')
       push('/')
     } catch (e) {
+      if (e.response) toast.error(e.response.data.errors)
       console.log(e);
-      // toast.error(e.response.data.errors)
       setLoading(false)
     }
   }

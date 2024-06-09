@@ -34,7 +34,8 @@ export default function RegisterPage () {
       toast.success('Register success, please login')
       push('/login')
     } catch (e) {
-      toast.error(e.response.data.errors)
+      if (e.response) toast.error(e.response.data.errors)
+      console.log(e);
       setLoading(false)
     }
   }
