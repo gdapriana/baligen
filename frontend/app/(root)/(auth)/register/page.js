@@ -1,6 +1,5 @@
 'use client'
 
-import axios from 'axios';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {toast} from 'sonner';
@@ -9,6 +8,7 @@ import {useState} from 'react';
 import Link from 'next/link';
 import {LogIn} from 'lucide-react';
 import {iconClass} from '@/lib/utils';
+import {axiosInstance} from '@/lib/axios';
 
 export default function RegisterPage () {
 
@@ -29,7 +29,7 @@ export default function RegisterPage () {
     }
     setLoading(true)
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/users/register`, payload)
+      const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_SERVER}/users/register`, payload)
       setLoading(false)
       toast.success('Register success, please login')
       push('/login')
@@ -51,7 +51,7 @@ export default function RegisterPage () {
       <Button asChild className="absolute right-0 top-0 m-4 md:m-8">
         <Link href="/">Back Home</Link>
       </Button>
-      <div className="bg-[url('/images/wallpaper.jpg')] grayscale hidden h-full w-1/2 lg:flex"></div>
+      <div className="bg-[url('/images/wallpaper.jpg')] hidden h-full w-1/2 lg:flex bg-left bg-cover"></div>
       <div className="w-full lg:w-1/2 p-8 flex flex-col gap-12 justify-center items-center lg:items-start">
         <div className="flex flex-col gap-2 justify-start items-stretch">
           <h1 className="font-bold text-xl lg:text-3xl">Welcome to <span

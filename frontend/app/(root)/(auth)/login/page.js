@@ -6,8 +6,8 @@ import {LogIn} from 'lucide-react';
 import {iconClass} from '@/lib/utils';
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';
-import axios from 'axios';
 import {toast} from 'sonner';
+import {axiosInstance} from '@/lib/axios';
 
 export default function LoginPage () {
 
@@ -22,7 +22,7 @@ export default function LoginPage () {
     }
     setLoading(true)
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/users/login`, payload, { withCredentials: true })
+      const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_SERVER}/users/login`, payload, { withCredentials: true })
       setLoading(false)
       toast.success('Login success')
       push('/')
@@ -65,7 +65,7 @@ export default function LoginPage () {
           <Button className="gap-1" type="submit">Login <LogIn className={iconClass}/></Button>
         </form>
       </div>
-      <div className="hidden lg:flex h-full lg:w-1/2 grayscale bg-[url('/images/wallpaper.jpg')]"></div>
+      <div className="hidden lg:flex h-full lg:w-1/2 bg-[url('/images/wallpaper.jpg')] bg-cover bg-right"></div>
     </main>
   )
 }
