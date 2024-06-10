@@ -20,7 +20,7 @@ export const Hero = () => {
           <h1 className="font-bold text-[3rem] text-border text-muted">{process.env.NEXT_PUBLIC_APP}</h1>
         </div>
         <p className="text-xl font-medium text-muted text-center">{metadata.description}</p>
-        <Button size="lg" className="gap-2 mt-8" asChild>
+        <Button variant="secondary" size="lg" className="gap-2 mt-8" asChild>
           <Link href="#dashboard" className="text-xl">
             Explore Now <Rocket/>
           </Link>
