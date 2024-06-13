@@ -61,7 +61,11 @@ class UserService {
       include: {
         _count: true,
         favoritedCultures: true,
-        favoritedDestinations: true,
+        favoritedDestinations: {
+          include: {
+            destination: true
+          }
+        },
         ratedDestinations: true,
         favoritedStories: true,
         stories: true
