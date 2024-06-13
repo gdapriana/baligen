@@ -60,7 +60,11 @@ class UserService {
       },
       include: {
         _count: true,
-        favoritedCultures: true,
+        favoritedCultures: {
+          include: {
+            culture: true
+          }
+        },
         favoritedDestinations: {
           include: {
             destination: true
