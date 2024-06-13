@@ -62,12 +62,22 @@ class UserService {
         _count: true,
         favoritedCultures: {
           include: {
-            culture: true
+            culture: {
+              include: {
+                category: true,
+                district: true
+              }
+            }
           }
         },
         favoritedDestinations: {
           include: {
-            destination: true
+            destination: {
+              include: {
+                category: true,
+                district: true
+              }
+            }
           }
         },
         ratedDestinations: true,
