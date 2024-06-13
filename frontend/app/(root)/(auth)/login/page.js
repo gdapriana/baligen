@@ -4,15 +4,23 @@ import Link from 'next/link';
 import {Input} from '@/components/ui/input';
 import {LogIn} from 'lucide-react';
 import {iconClass} from '@/lib/utils';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
 import {axiosInstance} from '@/lib/axios';
+import {verifytoken} from '@/lib/verifytoken';
 
 export default function LoginPage () {
-
-  const { push } = useRouter()
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+    if (verifytoken()) {
+      router.push('/')
+    }
+    setLoading(false)
+  }, []);
 
   const submitHandle = async (e) => {
     e.preventDefault()
@@ -22,7 +30,9 @@ export default function LoginPage () {
     }
     setLoading(true)
     try {
-      const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_SERVER}/users/login`, payload, { withCredentials: true })
+      const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_SERVER}/users/login`, payload)
+      console.log(response.data);
+      localStorage.setItem('token', response.data.data.accessToken)
       setLoading(false)
       toast.success('Login success')
       push('/')

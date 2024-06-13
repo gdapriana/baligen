@@ -4,16 +4,23 @@ import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {toast} from 'sonner';
 import {useRouter} from 'next/navigation';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import {LogIn} from 'lucide-react';
 import {iconClass} from '@/lib/utils';
 import {axiosInstance} from '@/lib/axios';
+import {verifytoken} from '@/lib/verifytoken';
 
 export default function RegisterPage () {
 
   const { push } = useRouter()
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (verifytoken()) {
+      push('/')
+    }
+  }, []);
 
   const submitHandle = async (e) => {
     e.preventDefault()

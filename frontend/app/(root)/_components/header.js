@@ -6,14 +6,17 @@ import {Search} from '@/app/(root)/_components/search';
 import {Navigations} from '@/app/(root)/_components/navigations';
 import {SigninBtn} from '@/app/(root)/_components/signin-btn';
 
-export const Header = ({ scrolled }) => {
+export const Header = ({ user, scrolled }) => {
   return (
     <header className={cn('p-4 flex justify-center items-center', scrolled && 'border-b' )}>
       <div className="w-full max-w-6xl gap-4 flex justify-between items-center">
         <Brand />
         <Search />
         <Navigations />
-        <SigninBtn view="desktop" />
+
+        { !user && <SigninBtn view="desktop" /> }
+        { user && <p>{user.username}</p> }
+
       </div>
     </header>
   )
