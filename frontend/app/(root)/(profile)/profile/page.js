@@ -7,30 +7,30 @@ import {getUser} from '@/lib/get-user';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import {Button} from '@/components/ui/button';
 import Link from 'next/link';
-import {Card} from '@/components/ui/card';
+import {DestinationCard, CultureCard} from '@/components/ui/card';
 
 export default function ProfilePage () {
   const router = useRouter();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [user, setUser] = useState()
   const [activeFavorite, setActiveFavorite] = useState('destinations')
 
   useEffect(() => {
-    setLoading(true)
     async function userCheck() {
       if (verifytoken()) {
+        setLoading(true)
         setUser(await getUser())
+        setLoading(false)
       } else {
         router.push('/')
       }
     }
     userCheck().then()
-    setLoading(false)
   }, [])
 
   if (loading) {
     return (
-      <main className="absolute w-full top-0 h-screen flex justify-center items-center">Loading...</main>
+      <main className="absolute z-[999] w-full top-0 h-screen flex justify-center items-center">Loading...</main>
     )
   }
 
@@ -49,23 +49,23 @@ export default function ProfilePage () {
           </Button>
         </div>
 
-        <div className="flex p-4 flex-col justify-start items-stretch">
+        <div className="flex gap-8 p-4 flex-col justify-start items-stretch">
           <div className="flex gap-4 justify-center items-center">
             <Button onClick={() => setActiveFavorite('destinations')} variant={activeFavorite === 'destinations' ? 'default': 'secondary'} className='w-1/2'>Favorited Destinations</Button>
             <Button onClick={() => setActiveFavorite('cultures')} variant={activeFavorite === 'cultures' ? 'default': 'secondary'} className='w-1/2'>Favorited Cultures</Button>
           </div>
-            <div className="grid relative grid-cols-1 lg:grid-cols-3">
-              {activeFavorite === 'destinations' && user?.favoritedDestinations.map((item) => {
-                  return (
-                    <Card destination={item.destination} key={item.destination.id} />
-                  )
-                })}
-              {activeFavorite === 'cultures' && user?.favoritedCultures.map((item) => {
-                  return (
-                    <div key={item.culture.id}>{item.culture.name}</div>
-                  )
-                })}
-            </div>
+          <div className="grid relative grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-4">
+            {activeFavorite === 'destinations' && user?.favoritedDestinations.map((item) => {
+                return (
+                  <DestinationCard destination={item.destination} key={item.destination.id} />
+                )
+              })}
+            {activeFavorite === 'cultures' && user?.favoritedCultures.map((item) => {
+                return (
+                  <CultureCard key={item.culture.id} culture={item.culture} />
+                )
+              })}
+          </div>
         </div>
       </div>
     </main>

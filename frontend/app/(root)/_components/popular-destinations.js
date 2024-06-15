@@ -1,10 +1,6 @@
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
-import Link from 'next/link';
-import {MapPin} from 'lucide-react';
-import {iconClass} from '@/lib/utils';
-import {Badge} from '@/components/ui/badge';
-import {Card} from '@/components/ui/card';
+import {DestinationCard} from '@/components/ui/card';
 
 const metadata = {
   title: 'Popular Destinations',
@@ -13,7 +9,7 @@ const metadata = {
 
 export const PopularDestinations = ({ destinations }) => {
 
-  const sorted = destinations?.slice(0, 3).sort((a, b) => b._count.favoritedByUsers - a._count.favoritedByUsers)
+  const sorted = destinations?.slice(0, 4).sort((a, b) => b._count.favoritedByUsers - a._count.favoritedByUsers)
 
   return (
     <main className="flex justify-center items-center">
@@ -25,10 +21,10 @@ export const PopularDestinations = ({ destinations }) => {
           <Button className="mt-4 hidden lg:flex">Load more</Button>
         </div>
         <div className="w-full lg:w-auto lg:gap-4 gap-1 flex justify-center items-center lg:basis-0 lg:grow overflow-auto">
-          <div className="lg:w-full gap-2 grid grid-cols-3 grid-rows-1">
+          <div className="lg:w-full gap-2 grid grid-cols-2 lg:grid-cols-4 grid-rows-1">
             {sorted?.map((destination) => {
               return (
-                <Card destination={destination} key={destination.id} />
+                <DestinationCard destination={destination} key={destination.id} />
               )
             })}
           </div>
