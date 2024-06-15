@@ -64,6 +64,7 @@ class UserService {
           include: {
             culture: {
               include: {
+                _count: true,
                 category: true,
                 district: true
               }
@@ -74,6 +75,7 @@ class UserService {
           include: {
             destination: {
               include: {
+                _count: true,
                 category: true,
                 district: true
               }
