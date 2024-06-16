@@ -11,7 +11,7 @@ import {getDistricts} from '@/app/(root)/_utils/get-districts';
 import {PopularDistricts} from '@/app/(root)/_components/popular-districts';
 
 export default function Home() {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [destinations, setDestinations] = useState()
   const [cultures, setCultures] = useState()
   const [districts, setDistricts] = useState()

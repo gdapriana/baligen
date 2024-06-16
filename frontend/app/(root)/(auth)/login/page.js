@@ -35,6 +35,7 @@ export default function LoginPage () {
       localStorage.setItem('token', response.data.data.accessToken)
       setLoading(false)
       toast.success('Login success')
+      window.location.reload()
       push('/')
     } catch (e) {
       if (e.response) toast.error(e.response.data.errors)
@@ -45,7 +46,7 @@ export default function LoginPage () {
 
   if (loading) {
     return (
-      <div className="absolute top-0 bg-muted w-full h-full">loading...</div>
+      <div className="absolute top-0 bg-muted w-full h-full flex justify-center items-center">loading...</div>
     )
   }
 

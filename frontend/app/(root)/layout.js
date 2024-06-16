@@ -8,19 +8,23 @@ import {verifytoken} from '@/lib/verifytoken';
 export default function RootLayout({ children }) {
   const [scrolled, setScrolled] = useState(false)
   const [user, setUser] = useState()
+  const [loading, setLoading] = useState(true)
 
   useEffect( () => {
     async function fetchUser() {
       setUser(await getUser())
     }
+
     if (verifytoken()) {
       fetchUser().then()
+      setLoading(false)
     }
+    setLoading(false)
   }, [])
 
   return (
     <main className="w-full h-screen justify-start items-stretch overflow-auto">
-      <Header user={user} scrolled={scrolled} />
+      <Header loading={loading} user={user} scrolled={scrolled} />
       <div className="">
         { children }
       </div>
