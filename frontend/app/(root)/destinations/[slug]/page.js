@@ -25,10 +25,7 @@ export default function DestinationPage({ params }) {
 
   return (
     <main className="flex justify-start items-center flex-col" >
-      <div className="w-full justify-center bg-cover bg-center items-center" style={{backgroundImage: `url(${destination?.cover})`}}>
-        <div className="w-full h-[500px] max-w-6xl">
-
-        </div>
+      <div className="w-full h-[600px] justify-center bg-cover bg-center items-center" style={{backgroundImage: `url(${destination?.cover})`}}>
       </div>
     </main>
   )
