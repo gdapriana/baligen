@@ -1,3 +1,5 @@
+'use client'
+
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Label } from "@radix-ui/react-dropdown-menu"
@@ -13,10 +15,12 @@ export const UpdateProfile = ({ user }) => {
     e.preventDefault()
 
     const payload = {
-      profilePicture: e.target.profilePicture.value,
-      name: e.target.name.value,
-      address: e.target.address.value
+      profilePicture: e.target.profilePicture.value === '' ? undefined: e.target.profilePicture.value,
+      name: e.target.name.value === '' ? undefined: e.target.name.value,
+      address: e.target.address.value === '' ? undefined: e.target.address.value,
     }
+
+    console.log(payload)
 
     try {
       await axiosInstance.patch(`${process.env.NEXT_PUBLIC_SERVER}/users/current`, payload, { headers: {Authorization: `bearer ${token}`} })
@@ -46,25 +50,19 @@ export const UpdateProfile = ({ user }) => {
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
-            <Input id="name" value={user?.name} className="col-span-3" />
+            <Input id="name" name="name" defaultValue={user?.name} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="profilePicture" className="text-right">
               Profile Picture
             </Label>
-            <Input id="profilePicture" value={user?.profilePicture} className="col-span-3" />
+            <Input id="profilePicture" name="profilePicture" defaultValue={user?.profilePicture} className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="address" className="text-right">
               Address
             </Label>
-            <Input id="address" value={user?.address} className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="email" className="text-right">
-              Email
-            </Label>
-            <Input id="email" name="email" value={user?.email} className="col-span-3" />
+            <Input id="address" name="address" defaultValue={user?.address} className="col-span-3" />
           </div>
           <SheetFooter>
             <SheetClose asChild>
