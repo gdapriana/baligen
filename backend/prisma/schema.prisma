@@ -18,7 +18,7 @@ model User {
   id             String  @id @default(cuid())
   username       String  @unique @db.VarChar(30)
   name           String? @db.VarChar(50)
-  email          String? @unique @db.VarChar(100)
+  email          String? @db.VarChar(100)
   password       String? @db.VarChar(100)
   address        String? @db.Text
   profilePicture String? @db.Text

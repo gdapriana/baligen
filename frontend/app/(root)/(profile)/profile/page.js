@@ -8,6 +8,7 @@ import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import {Button} from '@/components/ui/button';
 import Link from 'next/link';
 import {DestinationCard, CultureCard} from '@/components/ui/card';
+import { UpdateProfile } from './_components/update';
 
 export default function ProfilePage () {
   const router = useRouter();
@@ -44,9 +45,7 @@ export default function ProfilePage () {
           </Avatar>
           <h1 className="font-bold text-lg">@{user?.username}</h1>
           <p className="font-medium text-muted-foreground">{user?.name}</p>
-          <Button asChild>
-            <Link href="/profile/update">Update Profile</Link>
-          </Button>
+          <UpdateProfile user={user} />
         </div>
 
         <div className="flex gap-8 p-4 flex-col justify-start items-stretch">

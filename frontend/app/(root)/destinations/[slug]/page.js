@@ -12,7 +12,6 @@ export default function DestinationPage({ params }) {
     getDestination(setLoading, slug, setDestination).then()
   }, []);
 
-  console.log(destination);
 
   const handleFavorite = async () => {
 
@@ -25,6 +24,12 @@ export default function DestinationPage({ params }) {
   if (loading) return <Loading />
 
   return (
-    <div>{destination?.name}</div>
+    <main className="flex justify-start items-center flex-col" >
+      <div className="w-full justify-center bg-cover bg-center items-center" style={{backgroundImage: `url(${destination?.cover})`}}>
+        <div className="w-full h-[500px] max-w-6xl">
+
+        </div>
+      </div>
+    </main>
   )
 }

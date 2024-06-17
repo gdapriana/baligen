@@ -40,7 +40,6 @@ export const Navigations = () => {
             </SheetTitle>
           </SheetHeader>
           <div className="grid gap-1 py-4">
-            <SigninBtn view="mobile" />
             {navigations.map((route, index) => {
               return (
                 <Button size="" variant="ghost" key={index}>

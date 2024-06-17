@@ -87,6 +87,7 @@ class UserService {
         stories: true
       }
     })
+
     if (!user) throw new ErrorResponse(404, 'user not found')
     const exclude = (user, keys) => {
       return Object.fromEntries(

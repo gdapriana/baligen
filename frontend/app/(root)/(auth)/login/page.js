@@ -31,7 +31,6 @@ export default function LoginPage () {
     setLoading(true)
     try {
       const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_SERVER}/users/login`, payload)
-      console.log(response.data);
       localStorage.setItem('token', response.data.data.accessToken)
       setLoading(false)
       toast.success('Login success')

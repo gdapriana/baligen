@@ -3,10 +3,10 @@ import {LogIn} from 'lucide-react';
 import {cn, iconClass} from '@/lib/utils';
 import Link from 'next/link';
 
-export const SigninBtn = ({ view }) => {
+export const SigninBtn = () => {
   return (
     <>
-      <Button className={cn('gap-2', view === 'mobile' ? 'md:hidden' : 'hidden md:flex')} asChild>
+      <Button className={cn('gap-2')} asChild>
         <Link href="/login">
           <LogIn className={iconClass} /> Login
         </Link>
