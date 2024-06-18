@@ -2,13 +2,13 @@
 import {useEffect, useState} from 'react';
 import {Loading} from '@/components/ui/loading.jsx';
 import {getDestination} from '@/app/(root)/destinations/[slug]/_utils/get-destination';
-import { Bookmark, EllipsisVertical, Layers2, MapPin, MessageCircle, MessageCircleWarning, Plus, ShieldAlert, Trash } from 'lucide-react';
+import { Bookmark, EllipsisVertical, Layers2, Map, MapPin, MessageCircle, MessageCircleWarning, Plus, ShieldAlert, Trash } from 'lucide-react';
 import { verifytoken } from '@/lib/verifytoken';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { cn, iconClass } from '@/lib/utils';
 import { getUser } from '@/lib/get-user';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import Image from 'next/image';
 import { favoriteDestination } from './_utils/favorite-destination';
 import { unFavoriteDestination } from './_utils/unfavorite-destination';
@@ -118,6 +118,9 @@ export default function DestinationPage({ params }) {
             <div className="flex justify-center items-center gap-2">
               <Button className="gap-1" variant='outline'><Layers2 className={iconClass} />{destination?.category?.name}</Button>
               <Button className="gap-1" variant='outline'><MapPin className={iconClass} />{destination?.district?.name}</Button>
+              <Button variant="default" asChild>
+                <Link href={`https://maps.google.com/?q=${destination?.latitude},${destination?.longitude}`}><Map className={cn('me-1', iconClass)} /> Open Maps</Link>
+              </Button>
             </div>
             <div className="flex justify-center items-center">
               <Button className="gap-1" variant="ghost" asChild>
@@ -140,7 +143,10 @@ export default function DestinationPage({ params }) {
                       <Image alt="image" width={1920} height={1080} className="aspect-video rounded-lg" src={image.uri} />
                     </DialogTrigger>
                     <DialogContent>
-                      <Image alt="image" width={1920} height={1080} className="aspect-video" src={image.uri} />
+                      <DialogHeader>{image.description}</DialogHeader>
+                      <DialogDescription>
+                        <Image alt="image" width={1920} height={1080} className="aspect-video" src={image.uri} />
+                      </DialogDescription>
                     </DialogContent>
                   </Dialog>
                 )
