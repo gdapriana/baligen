@@ -17,7 +17,7 @@ export const Hero = () => {
       <div className="flex p-4 flex-col gap-2 justify-center items-center">
         <div className="flex gap-2 justify-center items-center">
           <Image src="/images/logo.png" alt="logo" width={1000} height={1000} className="w-16 h-16"/>
-          <h1 className="font-bold text-[3rem] text-border text-muted">{process.env.NEXT_PUBLIC_APP}</h1>
+          <h1 className="font-bold text-[3rem] text-muted">{process.env.NEXT_PUBLIC_APP}</h1>
         </div>
         <p className="text-xl font-medium text-muted text-center">{metadata.description}</p>
         <Button variant="secondary" size="lg" className="gap-2 mt-8" asChild>
