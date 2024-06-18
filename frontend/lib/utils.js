@@ -10,5 +10,4 @@ export const navigations = [
   { name: "Home", route: "/" },
   { name: "Destinations", route: "/destinations"},
   { name: "Cultures", route: "/cultures" },
-  { name: "Contact us", route: "/contact" }
 ]

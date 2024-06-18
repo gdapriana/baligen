@@ -3,7 +3,7 @@ import authMiddleware from '../middleware/auth-middleware.js'
 import UserController from '../controller/user-controller.js'
 import DestinationController from '../controller/destination-controller.js'
 import CultureController from '../controller/culture-controller.js'
-import refreshToken from '../controller/refresh-token.js';
+import refreshToken from '../controller/refresh-token.js'
 
 const authRoute = express.Router()
 authRoute.use(authMiddleware)
