@@ -1,50 +1,46 @@
 'use client'
-import {useEffect, useState} from 'react';
-import {Loading} from '@/components/ui/loading.jsx';
-import {getDestination} from '@/app/(root)/destinations/[slug]/_utils/get-destination';
-import { Bookmark, EllipsisVertical, Layers2, Map, MapPin, MessageCircle, MessageCircleWarning, Plus, ShieldAlert, Trash } from 'lucide-react';
-import { verifytoken } from '@/lib/verifytoken';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { cn, iconClass } from '@/lib/utils';
-import { getUser } from '@/lib/get-user';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
-import Image from 'next/image';
-import { favoriteDestination } from './_utils/favorite-destination';
-import { unFavoriteDestination } from './_utils/unfavorite-destination';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import moment from 'moment';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import Link from 'next/link';
-import { Textarea } from '@/components/ui/textarea';
-import { commentDestination } from './_utils/comment-destination';
-import { unCommentDestination } from './_utils/uncomment-destination';
-import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
-import { getCategories } from '../../_utils/get-categories';
-import { getDistricts } from '../../_utils/get-districts';
+import { useEffect, useState } from "react"
+import { getCulture } from "./_utils/get-culture"
+import { Loading } from "@/components/ui/loading"
+import { getDistricts } from "../../_utils/get-districts"
+import { getCategories } from "../../_utils/get-categories"
+import { Button } from "@/components/ui/button"
+import { Bookmark, EllipsisVertical, Layers2, MapPin, MessageCircle, MessageCircleWarning, Plus, Trash } from "lucide-react"
+import { cn, iconClass } from "@/lib/utils"
+import Link from "next/link"
+import { verifytoken } from "@/lib/verifytoken"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from "@/components/ui/dialog"
+import Image from "next/image"
+import { Textarea } from "@/components/ui/textarea"
+import { commentCulture } from "./_utils/comment-culture"
+import { unCommentCulture } from "./_utils/uncomment-culture"
+import { unFavoriteCulture } from "./_utils/unfavorite-culture"
+import { favoriteCulture } from "./_utils/favorite-culture"
+import { getUser } from "@/lib/get-user"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import moment from "moment"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger } from "@/components/ui/alert-dialog"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-
-export default function DestinationPage({ params }) {
+export default function CulturePage({ params }) {
   const slug = params.slug
-  const router = useRouter()
-  const [loading, setLoading] = useState(true)
-  const [destination, setDestination] = useState({})
-  const [user, setUser] = useState()
+  const [culture, setCulture] = useState()
+  const [loading, setLoading] = useState()
   const [categories, setCategories] = useState()
   const [districts, setDistricts] = useState()
   const [favoritedTotal, setFavoritedTotal] = useState(0)
   const [isFavorited, setIsFavorited] = useState(false)
+  const [user, setUser] = useState()
 
   useEffect(() => {
-    getDestination(setLoading, slug, setDestination).then()
-    getCategories(setLoading, setCategories).then()
+    getCulture(setLoading, slug, setCulture).then()
     getDistricts(setLoading, setDistricts).then()
+    getCategories(setLoading, setCategories).then()
   }, [])
 
   useEffect(() => {
-    setFavoritedTotal(destination?._count?.favoritedByUsers)
-  }, [destination])
+    setFavoritedTotal(culture?._count?.favoritedByUsers)
+  }, [culture])
 
   useEffect(() => {
     async function favoritedCheck() {
@@ -59,11 +55,10 @@ export default function DestinationPage({ params }) {
   useEffect(() => {
     if (verifytoken()) {
       setLoading(true)
-      setIsFavorited(destination?.favoritedByUsers?.some((item) => item?.username === user?.username))
+      setIsFavorited(culture?.favoritedByUsers?.some((item) => item?.username === user?.username))
       setLoading(false)
     }
-  }, [user, destination])
-
+  }, [user, culture])
 
   const sortedCategories = categories?.sort((a, b) => b._count.destinations - a._count.destinations).slice(0, 12)
   const sortedDistricts = districts?.sort((a, b) => b._count.destinations - a._count.destinations).slice(0, 12)
@@ -72,14 +67,13 @@ export default function DestinationPage({ params }) {
   const handleFavorite = async () => {
     if (!verifytoken()) router.push('/login')
     setFavoritedTotal(favoritedTotal + 1)
-    await favoriteDestination(destination?.slug)
-    window.location.reload()
+    await favoriteCulture(culture?.slug)
   }
 
   const handleUnfavorite = async () => {
     if (!verifytoken()) router.push('/login')
     setFavoritedTotal(favoritedTotal - 1)
-    await unFavoriteDestination(destination?.slug)
+    await unFavoriteCulture(culture?.slug)
     window.location.reload()
   }
 
@@ -89,53 +83,65 @@ export default function DestinationPage({ params }) {
     const payload = {
       body: e.target.comment.value
     }
-    await commentDestination(payload, destination?.slug)
+    await commentCulture(payload, culture?.slug)
     window.location.reload()
   }
 
   const handleUncomment = async (id) => {
     if (!verifytoken()) router.push('/login')
-    await unCommentDestination(id, destination?.slug)
+    await unCommentCulture(id, culture?.slug)
     window.location.reload()
   }
 
   if (loading) return <Loading />
 
   return (
-    <main className="flex justify-start items-center flex-col" >
-      <div className="w-full h-[600px] justify-center bg-cover bg-center items-center" style={{backgroundImage: `url(${destination?.cover})`}}></div>
+    <main className="flex justify-start items-center flex-col">
+      <div
+        style={{
+          background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), url(${culture?.cover})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+        className="w-full flex flex-col justify-center items-center h-[600px] bg-cover bg-center">
+      </div>
       <div className="w-full px-4 py-12 gap-8 max-w-6xl flex justify-center items-start">
         <div className="flex flex-col gap-8 justify-start items-stretch basis-0 grow">
           <div className="flex flex-col gap-2 justify-start items-stretch">
-            <h1 className="font-bold text-2xl">{destination?.name}</h1>
+            <h1 className="font-bold text-2xl">{culture?.name}</h1>
             <p className="font-medium text-muted-foreground">
-              {destination?.description}
+              {culture?.description}
             </p>
-            <p className="mt-2"><MapPin className="inline" /> {destination?.address}</p>
           </div>
+
+
           <div className="py-4 border-y flex justify-between items-center">
             <div className="flex justify-center items-center gap-2">
-              <Button className="gap-1" variant='outline'><Layers2 className={iconClass} />{destination?.category?.name}</Button>
-              <Button className="gap-1" variant='outline'><MapPin className={iconClass} />{destination?.district?.name}</Button>
-              <Button variant="default" asChild>
-                <Link href={`https://maps.google.com/?q=${destination?.latitude},${destination?.longitude}`}><Map className={cn('me-1', iconClass)} /> Open Maps</Link>
-              </Button>
+              {culture?.district === null ? (
+                <p className="mt-2"><MapPin className="inline" /> General Culture</p>
+              ) : (
+                <p className="mt-2"><MapPin className="inline" /> {culture?.district.name}</p>
+              )}
             </div>
             <div className="flex justify-center items-center">
               <Button className="gap-1" variant="ghost" asChild>
                 <Link href="#comment">
-                  <MessageCircle className={iconClass} />{destination?._count?.commentedByUsers}
+                  <MessageCircle className={iconClass} />{culture?._count?.commentedByUsers}
                 </Link>
               </Button>
               <Button onClick={isFavorited ? handleUnfavorite : handleFavorite} className="gap-1" variant={isFavorited ? 'default' : 'ghost'}><Bookmark className={iconClass} />{favoritedTotal}</Button>
             </div>
           </div>
 
-          {destination?._count?.images === 0 ? (
+
+          <div dangerouslySetInnerHTML={{__html: culture?.body}} className="prose"></div>
+
+
+          {culture?._count?.images === 0 ? (
             <div className="h-[200px] flex justify-center items-center">No Additional Images</div>
           ): (
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {destination?.images?.map((image) => {
+              {culture?.images?.map((image) => {
                 return (
                   <Dialog key={image.id}>
                     <DialogTrigger>
@@ -152,6 +158,8 @@ export default function DestinationPage({ params }) {
               })}
             </div>
           )}
+
+
           <div id='#comment' className='flex gap-4 flex-col justify-start items-stretch'>
             <header className='font-bold text-xl flex justify-between items-center'>
                <h1><MessageCircle className='inline' /> Comments</h1>
@@ -177,7 +185,7 @@ export default function DestinationPage({ params }) {
                )}
             </header>
             <div className='flex flex-col justify-start items-stretch'>
-              {destination?.commentedByUsers?.map((item) => {
+              {culture?.commentedByUsers?.map((item) => {
                 return (
                 <article className='flex border-b py-4 flex-col justify-start items-stretch' key={item.id}>
                   <div className='flex justify-between items-center'>
@@ -187,7 +195,7 @@ export default function DestinationPage({ params }) {
                         <AvatarImage src={item?.user?.profilePicture} />
                       </Avatar>
                       <div className='flex flex-col justify-start items-start'>
-                        <p className='font-bold'>@{item?.user.username}</p>
+                        <p className='font-bold'>@{item?.user?.username}</p>
                         <p className='font-medium text-sm text-muted-foreground'>{moment(item?.createdAt).fromNow()}</p>
                       </div>
                     </div>
@@ -249,7 +257,7 @@ export default function DestinationPage({ params }) {
                 )
               })}
 
-              {destination?._count?.commentedByUsers === 0 && (
+              {culture?._count?.commentedByUsers === 0 && (
                 <div className='w-full h-[200px] flex justify-center items-center'>
                   No Comment yet
                 </div>

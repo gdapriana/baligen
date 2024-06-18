@@ -1,10 +1,10 @@
 import {axiosInstance} from '@/lib/axios';
 
-export const getDistricts = async (setLoading, setDistricts) => {
+export const getCulture = async (setLoading, slug, setCulture) => {
   setLoading(true)
   try {
-    const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_SERVER}/districts`)
-    setDistricts(response.data.data)
+    const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_SERVER}/cultures/${slug}`)
+    setCulture(response.data.data)
     setLoading(false)
   } catch (error) {
     if (error.response) {

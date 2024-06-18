@@ -13,7 +13,16 @@ class CultureService {
       include: {
         _count: true,
         category: true,
-        commentedByUsers: true,
+        commentedByUsers: {
+          include: {
+            user: {
+              select: {
+                username: true,
+                profilePicture: true
+              }
+            }
+          }
+        },
         district: true,
         images: true,
         favoritedByUsers: true

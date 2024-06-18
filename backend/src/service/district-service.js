@@ -1,7 +1,7 @@
-import validate from '../validation/validate.js';
-import DistrictValidation from '../validation/district-validation.js';
-import database from '../application/database.js';
-import ErrorResponse from '../error/error-response.js';
+import validate from '../validation/validate.js'
+import DistrictValidation from '../validation/district-validation.js'
+import database from '../application/database.js'
+import ErrorResponse from '../error/error-response.js'
 
 class DistrictService {
   static async get (slug) {
