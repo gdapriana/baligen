@@ -21,6 +21,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import moment from "moment"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useRouter } from "next/navigation"
 
 export default function CulturePage({ params }) {
   const slug = params.slug
@@ -31,6 +32,8 @@ export default function CulturePage({ params }) {
   const [favoritedTotal, setFavoritedTotal] = useState(0)
   const [isFavorited, setIsFavorited] = useState(false)
   const [user, setUser] = useState()
+
+  const router = useRouter()
 
   useEffect(() => {
     getCulture(setLoading, slug, setCulture).then()
