@@ -22,7 +22,7 @@ export const DestinationsList = ({ destinations }) => {
       <div className="flex flex-col justify-start items-stretch">
         {destinations?.slice(0, listCount).map((item) => {
           return (
-            <div className="py-4 border-b gap-4 flex flex-col justify-start items-stretch">
+            <div key={item.id} className="py-4 border-b gap-4 flex flex-col justify-start items-stretch">
               <header className="flex justify-between items-center">
                 <div className="flex justify-center items-center gap-2">
                   <Avatar>
