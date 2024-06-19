@@ -12,7 +12,7 @@ export const PopularDestinations = ({ destinations }) => {
   const sorted = destinations?.slice(0, 4).sort((a, b) => b._count.favoritedByUsers - a._count.favoritedByUsers)
 
   return (
-    <main className="flex justify-center items-center">
+    <main id='popular-destinations' className="flex justify-center items-center">
       <div className="w-full gap-8 max-w-6xl px-4 py-20 flex flex-col justify-start items-stretch lg:flex-row lg:justify-center lg:items-center">
         <div className="flex w-full lg:w-1/4 justify-center items-center flex-col">
           <Image src='/images/logo3.png' alt='logo' className="w-44 lg:w-52 lg:h-52 h-44" width={1000} height={1000} />

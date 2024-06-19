@@ -21,7 +21,7 @@ export const Hero = () => {
         </div>
         <p className="text-xl font-medium text-muted text-center">{metadata.description}</p>
         <Button variant="secondary" size="lg" className="gap-2 mt-8" asChild>
-          <Link href="#dashboard" className="text-xl">
+          <Link href="#popular-destinations" className="text-xl">
             Explore Now <Rocket/>
           </Link>
         </Button>

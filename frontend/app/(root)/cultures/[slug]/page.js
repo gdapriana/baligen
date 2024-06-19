@@ -22,6 +22,8 @@ import moment from "moment"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useRouter } from "next/navigation"
+import { PopularCategories } from "../_components/popular-categories"
+import { PopularDistricts } from "../_components/popular-districts"
 
 export default function CulturePage({ params }) {
   const slug = params.slug
@@ -135,7 +137,6 @@ export default function CulturePage({ params }) {
               <Button onClick={isFavorited ? handleUnfavorite : handleFavorite} className="gap-1" variant={isFavorited ? 'default' : 'ghost'}><Bookmark className={iconClass} />{favoritedTotal}</Button>
             </div>
           </div>
-
 
           <div dangerouslySetInnerHTML={{__html: culture?.body}} className="prose"></div>
 
@@ -270,22 +271,8 @@ export default function CulturePage({ params }) {
         </div>
 
         <div className="hidden gap-4 lg:flex w-1/4 flex-col justify-start items-stretch">
-          <h1 className="font-bold text-lg">Popular Categories</h1>
-          <div className='flex flex-wrap gap-2 justify-start items-start'>
-            {sortedCategories?.map((item) => {
-              return (
-                <Button variant="outline" className="gap-2" key={item.id}><Layers2 className={iconClass} />{item.name}</Button>
-              )
-            })}
-          </div>
-          <h1 className="font-bold text-lg">Popular District</h1>
-          <div className='flex flex-wrap gap-2 justify-start items-start'>
-            {sortedDistricts?.map((item) => {
-              return (
-                <Button variant="outline" className="gap-1" key={item.id}><MapPin className={iconClass} />{item.name}</Button>
-              )
-            })}
-          </div>
+          <PopularCategories categories={sortedCategories} />
+          <PopularDistricts districts={sortedDistricts} />
         </div>
       </div>
     </main>

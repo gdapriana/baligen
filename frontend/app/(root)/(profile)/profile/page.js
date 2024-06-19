@@ -9,6 +9,7 @@ import {Button} from '@/components/ui/button';
 import Link from 'next/link';
 import {DestinationCard, CultureCard} from '@/components/ui/card';
 import { UpdateProfile } from './_components/update';
+import { Loading } from '@/components/ui/loading';
 
 export default function ProfilePage () {
   const router = useRouter();
@@ -29,11 +30,7 @@ export default function ProfilePage () {
     userCheck().then()
   }, [])
 
-  if (loading) {
-    return (
-      <main className="absolute z-[999] w-full top-0 h-screen flex justify-center items-center">Loading...</main>
-    )
-  }
+  if (loading) return <Loading />
 
   return (
     <main className="flex justify-center items-center">

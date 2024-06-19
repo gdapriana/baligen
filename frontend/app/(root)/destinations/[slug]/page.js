@@ -2,7 +2,7 @@
 import {useEffect, useState} from 'react';
 import {Loading} from '@/components/ui/loading.jsx';
 import {getDestination} from '@/app/(root)/destinations/[slug]/_utils/get-destination';
-import { Bookmark, EllipsisVertical, Layers2, Map, MapPin, MessageCircle, MessageCircleWarning, Plus, ShieldAlert, Trash } from 'lucide-react';
+import { Bookmark, EllipsisVertical, Layers2, Map, MapPin, MessageCircle, MessageCircleWarning, Plus, ShieldAlert, Trash, WalletMinimal } from 'lucide-react';
 import { verifytoken } from '@/lib/verifytoken';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,8 @@ import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescript
 import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
 import { getCategories } from '../../_utils/get-categories';
 import { getDistricts } from '../../_utils/get-districts';
+import { PopularCategories } from '../_components/popular-categories';
+import { PopularDistricts } from '../_components/popular-districts';
 
 
 export default function DestinationPage({ params }) {
@@ -113,15 +115,23 @@ export default function DestinationPage({ params }) {
             </p>
             <p className="mt-2"><MapPin className="inline" /> {destination?.address}</p>
           </div>
-          <div className="py-4 border-y flex justify-between items-center">
-            <div className="flex justify-center items-center gap-2">
+          <div className="py-4 border-y flex justify-between items-start">
+            <div className="flex justify-start items-center gap-2 flex-wrap">
               <Button className="gap-1" variant='outline'><Layers2 className={iconClass} />{destination?.category?.name}</Button>
               <Button className="gap-1" variant='outline'><MapPin className={iconClass} />{destination?.district?.name}</Button>
               <Button variant="default" asChild>
                 <Link href={`https://maps.google.com/?q=${destination?.latitude},${destination?.longitude}`}><Map className={cn('me-1', iconClass)} /> Open Maps</Link>
               </Button>
+              <Button variant="default" className="gap-1">
+                <WalletMinimal className={iconClass} />
+                {destination.price === 0 || destination.price === undefined ? (
+                  <p>Free Entry</p>
+                ) : (
+                  <p>Rp. {destination.price}</p>
+                )}
+              </Button>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex flex-wrap justify-center items-center">
               <Button className="gap-1" variant="ghost" asChild>
                 <Link href="#comment">
                   <MessageCircle className={iconClass} />{destination?._count?.commentedByUsers}
@@ -254,27 +264,14 @@ export default function DestinationPage({ params }) {
                   No Comment yet
                 </div>
               )}
+
             </div>
           </div>
         </div>
 
         <div className="hidden gap-4 lg:flex w-1/4 flex-col justify-start items-stretch">
-          <h1 className="font-bold text-lg">Popular Categories</h1>
-          <div className='flex flex-wrap gap-2 justify-start items-start'>
-            {sortedCategories?.map((item) => {
-              return (
-                <Button variant="outline" className="gap-2" key={item.id}><Layers2 className={iconClass} />{item.name}</Button>
-              )
-            })}
-          </div>
-          <h1 className="font-bold text-lg">Popular District</h1>
-          <div className='flex flex-wrap gap-2 justify-start items-start'>
-            {sortedDistricts?.map((item) => {
-              return (
-                <Button variant="outline" className="gap-1" key={item.id}><MapPin className={iconClass} />{item.name}</Button>
-              )
-            })}
-          </div>
+          <PopularCategories categories={sortedCategories} />
+          <PopularDistricts districts={sortedDistricts} />
         </div>
       </div>
     </main>
