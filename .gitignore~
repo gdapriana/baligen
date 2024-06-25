@@ -6,7 +6,3 @@
 
 /backend/.env
 /frontend/.env
-
-.idea
-.vscode
-.idx
