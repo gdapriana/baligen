@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { NextauthProvider } from "@/lib/nextauth-provider";
 import { ScrollProvider } from "@/lib/scroll-provider";
+import { ThemeProvider } from "@/lib/theme-provider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ['100', '200', '300', '400', '500'] });
 const inter = Inter({ subsets: ['latin'] })
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextauthProvider>
-          <ScrollProvider>
-            {children}
-          </ScrollProvider>
+          <ThemeProvider attribute="class" defaultTheme="system">
+            <ScrollProvider>
+              {children}
+            </ScrollProvider>
+          </ThemeProvider>
         </NextauthProvider>
       </body>
     </html>
