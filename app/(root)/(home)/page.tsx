@@ -2,6 +2,7 @@
 
 import { ScrollContext } from "@/lib/scroll-provider";
 import { useContext } from "react";
+import { Hero } from "@/app/(root)/(home)/_components/hero";
 
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
 
   return (
     <main onScrollCapture={ scrollHandle } className="basis-0 grow overflow-auto p-4">
+      <Hero />
     </main>
   )
 }
