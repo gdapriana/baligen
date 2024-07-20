@@ -4,6 +4,7 @@ import "./globals.css";
 import { NextauthProvider } from "@/lib/nextauth-provider";
 import { ScrollProvider } from "@/lib/scroll-provider";
 import { ThemeProvider } from "@/lib/theme-provider";
+import { Toaster } from 'sonner'
 
 const poppins = Poppins({ subsets: ["latin"], weight: ['100', '200', '300', '400', '500'] });
 const inter = Inter({ subsets: ['latin'] })
@@ -24,6 +25,7 @@ export default function RootLayout({
         <NextauthProvider>
           <ThemeProvider attribute="class" defaultTheme="system">
             <ScrollProvider>
+              <Toaster position="bottom-right" expand />
               {children}
             </ScrollProvider>
           </ThemeProvider>

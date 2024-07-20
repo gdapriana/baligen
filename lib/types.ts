@@ -3,109 +3,251 @@ export interface routesProps {
   route: string
 }
 
-export interface userProps {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: string;
-  image: string;
-  // favoritedDestinations: destinationProps[]
+export interface UserProps {
+  id: string
+  name?: string
+  email: string
+  emailVerified?: string
+  image?: string
+  accounts: AccountProps[]
+  sessions: SessionProps[]
+  Authenticator: AuthenticatorProps[]
 
-  // ratedDestinations     UsersRateDestinations[]
-  // favoritedStories      UsersFavoriteStories[]
-  // favoritedCultures     UsersFavoriteCultures[]
-  // commentedDestinations UsersCommentDestinations[]
-  // commentedStories      UsersCommentStories[]
-  // commentedCultures     UsersCommentCultures[]
-  // stories               Story[]
-  createdAt: string;
-  updatedAt: string;
+  ratedDestinations: UsersRateDestinationsProps[]
+  favoritedDestinations: UsersFavoriteDestinationsProps[]
+  favoritedStories: UsersFavoriteStoriesProps[]
+  favoritedCultures: UsersFavoriteCulturesProps[]
+  commentedDestinations: UsersCommentDestinationsProps[]
+  commentedStories: UsersCommentStoriesProps[]
+  commentedCultures: UsersCommentCulturesProps[]
+  stories: StoryProps[]
+  createdAt: string
+  updatedAt: string
 }
 
-// export interface destinationProps {
-//   id: string; 
-//   name: string; 
-//   slug: string; 
-//   description: string; 
-//   cover?: string;
-//   address: string;
-//   latitude: string; 
-//   longitude: string; 
-//   price: number
-//   districtSlug: string;
-//   categorySlug: string;
-//   createdAt: string;
-//   updatedAt: string;
+export interface AccountProps {
+  userId: string
+  type: string
+  provider: string
+  providerAccountId: string
+  refresh_token?: string
+  access_token?: string
+  expires_at?: number
+  token_type?: string
+  scope?: string
+  id_token?: string
+  session_state?: string
+  createdAt: string
+  updatedAt: string
+  user: UserProps
+}
 
-//   favoritedByUsers UsersFavoriteDestinations[]
-//   commentedByUsers UsersCommentDestinations[]
-//   ratedByUsers     UsersRateDestinations[]
-//   images           Image[]
-// }
+export interface SessionProps {
+  sessionToken: string
+  userId: string
+  expires: string 
+  user: UserProps
+  createdAt: string
+  updatedAt: string
+}
+ 
+export interface VerificationTokenProps {
+  identifier: string
+  token: string
+  expires: string
+}
+ 
+export interface AuthenticatorProps {
+  credentialID: string
+  userId: string
+  providerAccountId: string
+  credentialPublicKey: string
+  counter: number 
+  credentialDeviceType: string 
+  credentialBackedUp: boolean 
+  transports?: string
+  user: UserProps
+}
 
-// export interface cultureProps {
-//   id: string;
-//   name: string;
-//   slug: string;
-//   address?: string;
-//   cover?: string;
-//   description: string;
-//   body?: string;
-//   districtSlug?: string;
-//   categorySlug?: string;
-//   createdAt: string;
-//   updatedAt: string;
+// -------------------------
 
-//   favoritedByUsers UsersFavoriteCultures[]
-//   commentedByUsers UsersCommentCultures[]
-//   images           Image[]
-// }
+export interface DestinationProps {
+  id: string 
+  name: string 
+  slug: string 
+  description: string 
+  cover?: string
+  address: string 
+  latitude: string 
+  longitude: string 
+  price: number
+  districtSlug: string
+  categorySlug: string
+  createdAt: string
+  updatedAt: string
 
-// export interface storyProps {
-//   id: string;
-//   slug: string;
-//   createdAt: string;
-//   updatedAt: string;
+  district: DistrictProps
+  category: CategoryProps
+  favoritedByUsers: UsersFavoriteDestinationsProps[]
+  commentedByUsers: UsersCommentDestinationsProps[]
+  ratedByUsers: UsersRateDestinationsProps[]
+  images: ImageProps[]
+}
 
-//   userEmail: string;
-//   favoritedByUsers UsersFavoriteStories[]
-//   commentedByUsers UsersCommentStories[]
-//   images           Image[]
-// }
+export interface CultureProps {
+  id: string
+  name: string
+  slug: string
+  address?: string
+  cover?: string
+  description: string
+  body?: string
+  districtSlug?: string
+  categorySlug?: string
+  createdAt: string
+  updatedAt: string
 
-// export interface districtProps {
-//   id: string;
-//   name: string;
-//   slug: string;
-//   cover?: string;
-//   description: string;
-//   createdAt: string;
-//   updatedAt: string;
+  district?: DistrictProps 
+  category?: CategoryProps
+  favoritedByUsers: UsersFavoriteCulturesProps[]
+  commentedByUsers: UsersCommentCulturesProps[]
+  images: ImageProps[]
+}
 
-//   destinations Destination[]
-//   cultures     Culture[]
-// }
+export interface StoryProps {
+  id: string
+  slug: string
+  name: string
+  description: string
+  body: string
+  readtime?: number
+  cover: string
+  createdAt: string
+  updatedAt: string
 
-// export interface categoryProps {
-//   id: string;
-//   name: string;
-//   slug: string;
-//   cover: string;
-//   description: string;
+  userEmail: string
+  user: UserProps
+  favoritedByUsers: UsersFavoriteStoriesProps[]
+  commentedByUsers: UsersCommentStoriesProps[]
+  images: ImageProps[]
+}
 
-//   updatedAt: string;
-//   createdAt: string;
-//   cultures  Culture[]
-//   destinations Destination[]
-// }
+export interface DistrictProps {
+  id: string
+  name: string
+  slug: string
+  cover?: string
+  description: string
+  destinations: DestinationProps[]
+  createdAt: string
+  updatedAt: string
+  cultures: CultureProps[]
+}
 
-// export interface imageProps {
-//   id: string;
-//   uri: string;
-//   destinationSlug?: string;
-//   storySlug?: string;
-//   cultureSlug?: string;
-//   description: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
+export interface CategoryProps {
+  id: string
+  name: string
+  slug: string
+  cover?: string
+  destinations: DestinationProps[]
+  description: string
+  updatedAt: string
+  createdAt: string
+  cultures: CultureProps[]
+}
+
+export interface ImageProps {
+  id: string
+  uri: string
+  destinationSlug: string
+  storySlug?: string
+  description: string
+  cultureSlug?: string
+
+  destination?: DestinationProps
+  story?: StoryProps
+  culture?: CultureProps
+  createdAt: string
+  updatedAt: string
+
+}
+
+export interface UsersFavoriteDestinationsProps {
+  userEmail: string
+  user: UserProps
+  destinationSlug: string 
+  destination: DestinationProps
+  createdAt: string
+  updatedAt: string
+}
+
+export interface UsersFavoriteStoriesProps {
+  userEmail: string
+  user: UserProps
+  storyId: string
+  story: StoryProps
+  createdAt: string
+  updatedAt: string
+
+}
+
+export interface UsersFavoriteCulturesProps {
+  userEmail: string
+  user: UserProps
+  cultureSlug: string 
+  culture: CultureProps
+  createdAt: string
+  updatedAt: string
+}
+
+export interface UsersCommentStoriesProps {
+  id: string         
+  userEmail: string
+  body: string      
+  storySlug: string 
+  parentId?: string   
+  parent?: UsersCommentStoriesProps
+  childs: UsersCommentStoriesProps[]
+  user: UserProps
+  story: StoryProps
+  createdAt: string
+  updatedAt: string
+}
+
+export interface UsersCommentDestinationsProps {
+  id: string
+  userEmail: string
+  destinationSlug: string
+  parentId?: string
+  body: string
+  user: UserProps
+  parent?: UsersCommentDestinationsProps
+  childs: UsersCommentDestinationsProps[]
+  destination: DestinationProps
+  createdAt: string
+  updatedAt: string
+}
+
+export interface UsersCommentCulturesProps {
+  id: string
+  userEmail: string
+  cultureSlug: string
+  parentId?: string
+  body: string
+  parent?: UsersCommentCulturesProps
+  childs: UsersCommentCulturesProps[]
+  user: UserProps
+  culture: CultureProps
+  createdAt: string
+  updatedAt: string
+}
+
+export interface UsersRateDestinationsProps {
+  userEmail: string
+  destinationSlug: string
+  rate: number
+  user: UserProps
+  destination: DestinationProps
+  createdAt: string
+  updatedAt: string
+}

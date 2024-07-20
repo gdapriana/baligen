@@ -141,6 +141,11 @@ model Culture {
 model Story {
   id        String   @id @default(cuid())
   slug      String   @unique
+  name      String 
+  description String @db.Text
+  body String @db.Text
+  readtime Int? @default(3)
+  cover String @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -213,7 +218,7 @@ model UsersFavoriteDestinations {
 }
 
 model UsersFavoriteStories {
-  userEmail    String
+  userEmail String
   user      User     @relation(fields: [userEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
   storyId   String
   story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
