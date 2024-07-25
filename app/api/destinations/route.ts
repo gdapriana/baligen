@@ -7,6 +7,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const priceParams = Number(req.nextUrl.searchParams.get('price')) as number || undefined
   const districtParams = req.nextUrl.searchParams.get('district') as string || undefined
   const categoryParams = req.nextUrl.searchParams.get('category') as string || undefined
+  const itemTaken = Number(req.nextUrl.searchParams.get('take')) as number || undefined
   const mostSavedParams = Number(req.nextUrl.searchParams.get('saved')) as number || undefined
   const mostCommentParams = Number(req.nextUrl.searchParams.get('commented')) as number || undefined
   const mostRatedParams = Number(req.nextUrl.searchParams.get('rated')) as number || undefined
@@ -21,6 +22,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         {categorySlug: { contains: categoryParams, mode: 'insensitive'}},
       ]
     },
+    take: itemTaken,
     select: {
       _count: true,
       category: true,

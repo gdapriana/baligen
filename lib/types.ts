@@ -85,13 +85,18 @@ export interface DestinationProps {
   categorySlug: string
   createdAt: string
   updatedAt: string
-
   district: DistrictProps
   category: CategoryProps
   favoritedByUsers: UsersFavoriteDestinationsProps[]
   commentedByUsers: UsersCommentDestinationsProps[]
   ratedByUsers: UsersRateDestinationsProps[]
   images: ImageProps[]
+  _count: { 
+    favoritedByUsers: number
+    commentedByUsers: number
+    ratedByUsers: number
+    images: number
+  }
 }
 
 export interface CultureProps {
@@ -188,7 +193,6 @@ export interface UsersFavoriteStoriesProps {
   story: StoryProps
   createdAt: string
   updatedAt: string
-
 }
 
 export interface UsersFavoriteCulturesProps {
