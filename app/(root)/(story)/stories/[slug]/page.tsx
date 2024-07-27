@@ -19,8 +19,10 @@ export default function StoryPage({ params }: { params: { slug: string }}) {
   if (loading) return <Loading />
   if (story === null) router.push('/')
   return (
-    <div className="w-full flex justify-center items-center">
-
+    <div className="w-full flex justify-center items-center bg-red-500">
+      <div className="flex w-full max-w-6xl justify-center items-center">
+        
+      </div> 
     </div>
   )
 }

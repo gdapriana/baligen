@@ -5,8 +5,16 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Tiptap from "@/components/ui/tiptap"
 import { toast } from "sonner"
+import { z } from "zod"
 
 export default function CreateStoryPage() {
+
+  const formSchema = z.object({
+    name: z.string().min(2).max(100),
+    description: z.string().min(10).max(300),
+    readtime: z.number().default(3),
+    cover: z.string().url()
+  })
   
   const formSubmit = async (e: any) => {
     e.preventDefault()
