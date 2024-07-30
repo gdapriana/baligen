@@ -34,7 +34,7 @@ export const Header = () => {
   const { status, data } = useSession()
 
   return (
-    <header className={cn('flex justify-center items-center', scrolled && "border-b")}>
+    <header className={cn('flex justify-center sticky z-40 bg-white top-0 items-center', scrolled && "border-b")}>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: {duration: 0.8, ease: 'easeOut'} }} className="w-full max-w-6xl p-4 flex justify-between items-center gap-2">
         <Brand />
 
