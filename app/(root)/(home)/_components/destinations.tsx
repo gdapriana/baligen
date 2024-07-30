@@ -11,6 +11,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useContext, useEffect, useState } from "react"
 import { motion } from "framer-motion" 
+import { Loading } from "@/components/ui/loading"
 
 const metadata = {
   title: 'Popular Destinations',
@@ -36,6 +37,8 @@ export const Destinations = () => {
     setItem()
   }, [setLoading])
 
+  if (loading) return <Loading />
+
   return (
     <main className="w-full flex justify-center mt-20 items-center">
       <div className="w-full max-w-6xl gap-8 justify-start items-stretch lg:justify-center lg:items-center p-4 flex flex-col lg:flex-row">
@@ -47,16 +50,37 @@ export const Destinations = () => {
             <Link href={metadata.button.route}>{metadata.button.text} <metadata.button.icon className={iconsSize(4)} /></Link>
           </Button>
         </header>
-        <motion.div className="grow hidden lg:gap-4 gap-2 md:flex basis-0 overflow-auto">
-          {loading && (
-            <main>Loading...</main>
-          )}
 
+        <div className="w-full md:hidden overflow-auto rounded-2xl">
+          <div className="flex w-max justify-center items-center gap-2">
+            {!loading && (
+              destinations?.map((item: DestinationProps, index: number) => {
+                return (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: index * 0.1, duration: .5 }} className="w-64" key={index}>
+                    <Link href={`/destinations/${item.slug}`} className="border rounded-xl overflow-hidden flex flex-col justify-start items-stretch">
+                      <Image src={item.cover || ""} alt={item.name} width={1920} height={1080} className="w-full aspect-video object-cover" />
+                      <div className="md:p-4 p-2 flex flex-col justify-start items-stretch gap-1">
+                        <h1 className="font-bold line-clamp-1 text-base"><metadata.card.icon className={cn('inline-block me-1', iconsSize(4))} />{item.name}</h1>
+                        <p className="line-clamp-3 font-medium text-sm">{item.description}</p>
+                        <div className="flex justify-center mt-2 items-center gap-1 ms-auto">
+                          <Button size="sm" variant="outline" className="gap-1"><Heart className={iconsSize(4)} />{item._count.favoritedByUsers}</Button>
+                          <Button size="sm" variant="outline" className="gap-1"><MessageCircleMore className={iconsSize(4)} />{item._count.commentedByUsers}</Button>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                )
+              })
+            )}
+          </div>
+        </div>
+
+        <motion.div className="grow hidden lg:gap-4 gap-2 md:flex basis-0 overflow-auto">
           {!loading && (
             destinations?.map((item: DestinationProps, index: number) => {
               return (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: index * 0.1, duration: .5 }} className="" key={index}>
-                  <Link href={`/destinations/${item.slug}`} className="md:flex-1 border rounded-xl overflow-hidden flex flex-col justify-start items-stretch">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: index * 0.1, duration: .5 }} className="flex-1" key={index}>
+                  <Link href={`/destinations/${item.slug}`} className="border rounded-xl overflow-hidden flex flex-col justify-start items-stretch">
                     <Image src={item.cover || ""} alt={item.name} width={1920} height={1080} className="w-full aspect-video object-cover" />
                     <div className="md:p-4 p-2 flex flex-col justify-start items-stretch gap-1">
                       <h1 className="font-bold line-clamp-1 text-base"><metadata.card.icon className={cn('inline-block me-1', iconsSize(4))} />{item.name}</h1>
