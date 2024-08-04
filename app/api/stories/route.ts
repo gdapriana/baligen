@@ -7,7 +7,7 @@ import prisma from "@/lib/db";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const session = await getServerSession(authOptions)
-  if (session === null) return NextResponse.json({ error: 'unauthenticated' }, { status: 401 })
+  if (!session) return NextResponse.json({ error: 'unauthenticated' }, { status: 401 })
   const schema = z.object({
     name: z.string().min(3).max(200),
     body: z.string().min(20),

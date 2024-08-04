@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils"
 import { LucideIcon, MessageCircleMore, MessageCircleOff, MessageCircleWarning, Plus, Trash2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 import moment from 'moment'
+import { PostComment } from "../_actions/post-comment"
+import { DeleteComment } from "../_actions/delete-comment"
 
 const metadata = {
   header: {
@@ -33,16 +35,13 @@ const metadata = {
 }
 
 export const Comment = ({ destination }: { destination: DestinationProps | null | undefined }) => {
-  const session = useSession()
+  const { data, status } = useSession()
 
   return (
     <div className="flex gap-4 flex-col justify-start items-stretch mt-8">
       <header className="flex justify-between items-center">
         <h2 className="text-lg md:text-xl font-bold"><metadata.header.icon className={ cn("inline-block", iconsSize(6))} /> {metadata.header.text}</h2>
-        <Button size="sm" className="gap-1">
-          <metadata.header.addCommentIcon className={iconsSize(4)} />
-          {metadata.header.addCommentText}
-        </Button>
+        <PostComment Icon={metadata.header.addCommentIcon} text={metadata.header.addCommentText} email={data?.user?.email} slug={destination?.slug} />
       </header>
       <main className="flex justify-start mt-4 flex-col items-stretch gap-4">
         {
@@ -69,8 +68,8 @@ export const Comment = ({ destination }: { destination: DestinationProps | null 
                 </div>
 
                 <div className="flex items-center justify-between gap-2">
-                  {session.data?.user?.email === comment.user.email && (
-                    <Button variant="outline" size="icon"><metadata.actions.delete.icon className={iconsSize(4)} /></Button>
+                  {data?.user?.email === comment.user.email && (
+                    <DeleteComment destination={destination} Icon={metadata.actions.delete.icon} comment={comment} />
                   )}
                   <Button size="icon" variant="outline"><metadata.actions.report.icon className={iconsSize(4)} /></Button>
                 </div>
