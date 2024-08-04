@@ -10,10 +10,14 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
     include: {
       _count: true,
       category: true,
-      commentedByUsers: true,
+      commentedByUsers: {
+        include: {user: true}
+      },
       district: true,
       favoritedByUsers: true,
-      images: true,
+      images: {
+        include: {destination: true}
+      },
       ratedByUsers: true
     }
   })

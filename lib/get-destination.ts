@@ -19,9 +19,10 @@ export const getDestination = async (setLoading: Dispatch<SetStateAction<boolean
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/destinations/${slug}`)
     if (!res.ok) return null
     const data = await res.json()
-    setLoading(false)
     return data.destination
   } catch (error: unknown) {
     throw new Error(`Failed ${error}`)
+  } finally {
+    setLoading(false)
   }
 }
