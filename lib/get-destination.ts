@@ -1,4 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
+import { boolean } from "zod"
+import { DestinationProps } from "./types"
 
 export const getDestinations = async (take: number | undefined, setLoading: Dispatch<SetStateAction<boolean>>) => {
   setLoading(true)
@@ -25,4 +27,19 @@ export const getDestination = async (setLoading: Dispatch<SetStateAction<boolean
   } finally {
     setLoading(false)
   }
+}
+
+export const getFavoritedUser = (setLoading: Dispatch<SetStateAction<boolean>>, destination: DestinationProps | undefined | null, email: string | null | undefined) => {
+  setLoading(true)
+
+  if (destination) {
+    for (let index = 0; index < destination.favoritedByUsers.length; index++) {
+      if (destination.favoritedByUsers[index].userEmail === email) {
+        setLoading(false)
+        return true
+      }
+    }
+  }
+  setLoading(false)
+  return false
 }
