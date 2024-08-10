@@ -34,7 +34,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
       address: true,
       district: true,
       price: true,
-    }
+    },
+    orderBy: [
+      {favoritedByUsers: {_count: mostSavedParams === 0 ? 'asc' : 'desc'}},
+      {commentedByUsers: {_count: mostCommentParams === 0 ? 'asc' : 'desc'}},
+      {ratedByUsers: {_count: mostRatedParams === 0 ? 'asc' : 'desc'}},
+    ]
   })
   return NextResponse.json({ destinations }, { status: 200 })
 }

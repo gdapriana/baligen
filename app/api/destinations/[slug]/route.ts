@@ -19,7 +19,7 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
         include: {destination: true}
       },
       ratedByUsers: true
-    }
+    },
   })
   if (!destination) return NextResponse.json({ error: 'Destination not found' }, { status: 404 })
   return NextResponse.json({ destination }, { status: 200 })

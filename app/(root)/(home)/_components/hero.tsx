@@ -58,7 +58,6 @@ const slideInterval = (activeIndex: number, setActiveIndex: Dispatch<SetStateAct
   }
 }
 
-
 export const Hero = () => {
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0)
   const [mouseEnterSlide, setMouseEnterSlide] = useState<boolean>(false)
